@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="iOS," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Block 语法Block 可以认为是一种匿名函数，使用如下语法声明一个 Block 类型：1return_type (^block_name)(parameters) 例如：1double (^multiplyTwoValues)(double, double); Block 字面值的写法如下：123^ (double firstValue, double secondValue) &amp;#123;">
+<meta name="keywords" content="iOS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Block 基础">
+<meta property="og:url" content="http://yoursite.com/2018/10/14/Block-基础/index.html">
+<meta property="og:site_name" content="SixSixSix">
+<meta property="og:description" content="Block 语法Block 可以认为是一种匿名函数，使用如下语法声明一个 Block 类型：1return_type (^block_name)(parameters) 例如：1double (^multiplyTwoValues)(double, double); Block 字面值的写法如下：123^ (double firstValue, double secondValue) &amp;#123;">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-10-14T09:29:58.362Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Block 基础">
+<meta name="twitter:description" content="Block 语法Block 可以认为是一种匿名函数，使用如下语法声明一个 Block 类型：1return_type (^block_name)(parameters) 例如：1double (^multiplyTwoValues)(double, double); Block 字面值的写法如下：123^ (double firstValue, double secondValue) &amp;#123;">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/10/14/Block-基础/"/>
+
+
+
+
+
+  <title>Block 基础 | SixSixSix</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">SixSixSix</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/14/Block-基础/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="李">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SixSixSix">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Block 基础</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-14T17:19:04+08:00">
+                2018-10-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="Block-语法"><a href="#Block-语法" class="headerlink" title="Block 语法"></a>Block 语法</h2><p>Block 可以认为是一种匿名函数，使用如下语法声明一个 Block 类型：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">return_type (^block_name)(parameters)</span><br></pre></td></tr></table></figure></p>
+<p>例如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">double (^multiplyTwoValues)(double, double);</span><br></pre></td></tr></table></figure></p>
+<p>Block 字面值的写法如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">^ (double firstValue, double secondValue) &#123;</span><br><span class="line">    return firstValue * secondValue;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>上面的写法省略了返回值的类型，也可以显式地指出返回值类型。</p>
+<p>声明并且定义完一个Block之后，便可以像使用函数一样使用它：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">double (^multiplyTwoValues)(double, double) =</span><br><span class="line">                          ^(double firstValue, double secondValue) &#123;            </span><br><span class="line">                              return firstValue * secondValue;</span><br><span class="line">                          &#125;;</span><br><span class="line">double result = multiplyTwoValues(2,4);</span><br><span class="line"></span><br><span class="line">NSLog(@&quot;The result is %f&quot;, result);</span><br></pre></td></tr></table></figure></p>
+<p>同时，Block 也是一种 Objective-C 对象，可以用于赋值，当做参数传递，也可以放入 NSArray 和 NSDictionary 中。</p>
+<p>注意：当用于函数参数时，Block 应该放在参数列表的最后一个。</p>
+<p>由于 Block 的语法是如此的晦涩难记，以至于出现了 <a href="http://fuckingblocksyntax.com" target="_blank" rel="noopener">fuckingblocksyntax</a> 这样的网站专门用于记录 block 的语法，翻译并摘录如下：</p>
+<p>作为变量:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">returnType (^blockName)(parameterTypes) = ^returnType(parameters) &#123;...&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>作为属性:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@property (nonatomic, copy) returnType (^blockName)(parameterTypes);</span><br></pre></td></tr></table></figure></p>
+<p>作为函数声明中的参数:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">- (void)someMethodThatTakesABlock:(returnType (^)(parameterTypes))blockName;</span><br></pre></td></tr></table></figure></p>
+<p>作为函数调用中的参数:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[someObject someMethodThatTakesABlock:^returnType (parameters) &#123;...&#125;];</span><br></pre></td></tr></table></figure></p>
+<p>作为 typedef:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">typedef returnType (^TypeName)(parameterTypes);</span><br><span class="line">TypeName blockName = ^returnType(parameters) &#123;...&#125;;</span><br></pre></td></tr></table></figure></p>
+<h2 id="Block-可以捕获外部变量"><a href="#Block-可以捕获外部变量" class="headerlink" title="Block 可以捕获外部变量"></a>Block 可以捕获外部变量</h2><p>Block 可以捕获来自外部作用域的变量，这是Block一个很强大的特性。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">- (void)testMethod &#123;</span><br><span class="line">    int anInteger = 42;</span><br><span class="line">    void (^testBlock)(void) = ^&#123;</span><br><span class="line">        NSLog(@&quot;Integer is: %i&quot;, anInteger);</span><br><span class="line">    &#125;;</span><br><span class="line">    testBlock();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>默认情况下，Block 中捕获的到变量是不能修改的，如果想修改，需要使用__block来声明：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">__block int anInteger = 42;</span><br></pre></td></tr></table></figure></p>
+<p>对于 id 类型的变量，在 MRC 情况下，使用 <strong>block id x 不会 retain 变量，而在 ARC 情况下则会对变量进行 retain（即和其他捕获的变量相同）。如果不想在 block 中进行 retain 可以使用 </strong>unsafe_unretained <strong>block id x，不过这样可能会导致野指针出现。更好的办法是使用 </strong>weak 的临时变量：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">MyViewController *myController = [[MyViewController alloc] init];</span><br><span class="line"></span><br><span class="line">MyViewController * __weak weakMyViewController = myController;</span><br><span class="line">myController.completionHandler =  ^(NSInteger result) &#123;</span><br><span class="line">    [weakMyViewController dismissViewControllerAnimated:YES completion:nil];</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>或者把使用 __block 修饰的变量设为 nil，以打破引用循环：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">MyViewController * __block myController = [[MyViewController alloc] init];</span><br><span class="line"></span><br><span class="line">myController.completionHandler =  ^(NSInteger result) &#123;</span><br><span class="line">    [myController dismissViewControllerAnimated:YES completion:nil];</span><br><span class="line">    myController = nil;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/iOS/" rel="tag"># iOS</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/10/13/Protocol-Category-和-Extension/" rel="next" title="Protocol, Category 和 Extension">
+                <i class="fa fa-chevron-left"></i> Protocol, Category 和 Extension
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">李</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Block-语法"><span class="nav-number">1.</span> <span class="nav-text">Block 语法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Block-可以捕获外部变量"><span class="nav-number">2.</span> <span class="nav-text">Block 可以捕获外部变量</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">李</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
