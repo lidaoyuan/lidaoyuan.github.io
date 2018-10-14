@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="Block 语法Block 可以认为是一种匿名函数，使用如下语法声明一个 Block 类型：1return_type (^block_name)(parameters) 例如：1double (^multiplyTwoValues)(double, double); Block 字面值的写法如下：123^ (double firstValue, double secondValue) &amp;#123;">
+<meta name="description" content="UIViewController（视图控制器），顾名思义，是 MVC 设计模式中的控制器部分。UIViewController 在 UIKit 中主要功能是用于控制画面的切换，其中的 view 属性（UIView 类型）管理整个画面的外观。 UIViewController 生命周期 ViewController 生命周期的第一步是初始化。不过具体调用的方法还有所不同。如果使用 StoryBoar">
 <meta name="keywords" content="iOS">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Block 基础">
-<meta property="og:url" content="http://yoursite.com/2018/10/14/Block-基础/index.html">
+<meta property="og:title" content="UIViewController">
+<meta property="og:url" content="http://yoursite.com/2018/10/14/UIViewController/index.html">
 <meta property="og:site_name" content="SixSixSix">
-<meta property="og:description" content="Block 语法Block 可以认为是一种匿名函数，使用如下语法声明一个 Block 类型：1return_type (^block_name)(parameters) 例如：1double (^multiplyTwoValues)(double, double); Block 字面值的写法如下：123^ (double firstValue, double secondValue) &amp;#123;">
+<meta property="og:description" content="UIViewController（视图控制器），顾名思义，是 MVC 设计模式中的控制器部分。UIViewController 在 UIKit 中主要功能是用于控制画面的切换，其中的 view 属性（UIView 类型）管理整个画面的外观。 UIViewController 生命周期 ViewController 生命周期的第一步是初始化。不过具体调用的方法还有所不同。如果使用 StoryBoar">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-10-14T09:29:58.362Z">
+<meta property="og:updated_time" content="2018-10-14T10:29:59.440Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Block 基础">
-<meta name="twitter:description" content="Block 语法Block 可以认为是一种匿名函数，使用如下语法声明一个 Block 类型：1return_type (^block_name)(parameters) 例如：1double (^multiplyTwoValues)(double, double); Block 字面值的写法如下：123^ (double firstValue, double secondValue) &amp;#123;">
+<meta name="twitter:title" content="UIViewController">
+<meta name="twitter:description" content="UIViewController（视图控制器），顾名思义，是 MVC 设计模式中的控制器部分。UIViewController 在 UIKit 中主要功能是用于控制画面的切换，其中的 view 属性（UIView 类型）管理整个画面的外观。 UIViewController 生命周期 ViewController 生命周期的第一步是初始化。不过具体调用的方法还有所不同。如果使用 StoryBoar">
 
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/10/14/Block-基础/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/10/14/UIViewController/"/>
 
 
 
 
 
-  <title>Block 基础 | SixSixSix</title>
+  <title>UIViewController | SixSixSix</title>
   
 
 
@@ -253,7 +253,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/14/Block-基础/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/14/UIViewController/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="李">
@@ -270,7 +270,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Block 基础</h1>
+          <h1 class="post-title" itemprop="name headline">UIViewController</h1>
         
 
         <div class="post-meta">
@@ -282,7 +282,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-14T17:19:04+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-14T18:24:28+08:00">
                 2018-10-14
               </time>
             
@@ -320,23 +320,28 @@
       
 
       
-        <h2 id="Block-语法"><a href="#Block-语法" class="headerlink" title="Block 语法"></a>Block 语法</h2><p>Block 可以认为是一种匿名函数，使用如下语法声明一个 Block 类型：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">return_type (^block_name)(parameters)</span><br></pre></td></tr></table></figure></p>
-<p>例如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">double (^multiplyTwoValues)(double, double);</span><br></pre></td></tr></table></figure></p>
-<p>Block 字面值的写法如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">^ (double firstValue, double secondValue) &#123;</span><br><span class="line">    return firstValue * secondValue;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>上面的写法省略了返回值的类型，也可以显式地指出返回值类型。</p>
-<p>声明并且定义完一个Block之后，便可以像使用函数一样使用它：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">double (^multiplyTwoValues)(double, double) =</span><br><span class="line">                          ^(double firstValue, double secondValue) &#123;            </span><br><span class="line">                              return firstValue * secondValue;</span><br><span class="line">                          &#125;;</span><br><span class="line">double result = multiplyTwoValues(2,4);</span><br><span class="line"></span><br><span class="line">NSLog(@&quot;The result is %f&quot;, result);</span><br></pre></td></tr></table></figure></p>
-<p>同时，Block 也是一种 Objective-C 对象，可以用于赋值，当做参数传递，也可以放入 NSArray 和 NSDictionary 中。</p>
-<p>注意：当用于函数参数时，Block 应该放在参数列表的最后一个。</p>
-<p>由于 Block 的语法是如此的晦涩难记，以至于出现了 <a href="http://fuckingblocksyntax.com" target="_blank" rel="noopener">fuckingblocksyntax</a> 这样的网站专门用于记录 block 的语法，翻译并摘录如下：</p>
-<p>作为变量:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">returnType (^blockName)(parameterTypes) = ^returnType(parameters) &#123;...&#125;;</span><br></pre></td></tr></table></figure></p>
-<p>作为属性:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@property (nonatomic, copy) returnType (^blockName)(parameterTypes);</span><br></pre></td></tr></table></figure></p>
-<p>作为函数声明中的参数:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">- (void)someMethodThatTakesABlock:(returnType (^)(parameterTypes))blockName;</span><br></pre></td></tr></table></figure></p>
-<p>作为函数调用中的参数:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[someObject someMethodThatTakesABlock:^returnType (parameters) &#123;...&#125;];</span><br></pre></td></tr></table></figure></p>
-<p>作为 typedef:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">typedef returnType (^TypeName)(parameterTypes);</span><br><span class="line">TypeName blockName = ^returnType(parameters) &#123;...&#125;;</span><br></pre></td></tr></table></figure></p>
-<h2 id="Block-可以捕获外部变量"><a href="#Block-可以捕获外部变量" class="headerlink" title="Block 可以捕获外部变量"></a>Block 可以捕获外部变量</h2><p>Block 可以捕获来自外部作用域的变量，这是Block一个很强大的特性。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">- (void)testMethod &#123;</span><br><span class="line">    int anInteger = 42;</span><br><span class="line">    void (^testBlock)(void) = ^&#123;</span><br><span class="line">        NSLog(@&quot;Integer is: %i&quot;, anInteger);</span><br><span class="line">    &#125;;</span><br><span class="line">    testBlock();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>默认情况下，Block 中捕获的到变量是不能修改的，如果想修改，需要使用__block来声明：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">__block int anInteger = 42;</span><br></pre></td></tr></table></figure></p>
-<p>对于 id 类型的变量，在 MRC 情况下，使用 <strong>block id x 不会 retain 变量，而在 ARC 情况下则会对变量进行 retain（即和其他捕获的变量相同）。如果不想在 block 中进行 retain 可以使用 </strong>unsafe_unretained <strong>block id x，不过这样可能会导致野指针出现。更好的办法是使用 </strong>weak 的临时变量：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">MyViewController *myController = [[MyViewController alloc] init];</span><br><span class="line"></span><br><span class="line">MyViewController * __weak weakMyViewController = myController;</span><br><span class="line">myController.completionHandler =  ^(NSInteger result) &#123;</span><br><span class="line">    [weakMyViewController dismissViewControllerAnimated:YES completion:nil];</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
-<p>或者把使用 __block 修饰的变量设为 nil，以打破引用循环：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">MyViewController * __block myController = [[MyViewController alloc] init];</span><br><span class="line"></span><br><span class="line">myController.completionHandler =  ^(NSInteger result) &#123;</span><br><span class="line">    [myController dismissViewControllerAnimated:YES completion:nil];</span><br><span class="line">    myController = nil;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+        <p>UIViewController（视图控制器），顾名思义，是 MVC 设计模式中的控制器部分。UIViewController 在 UIKit 中主要功能是用于控制画面的切换，其中的 view 属性（UIView 类型）管理整个画面的外观。</p>
+<h2 id="UIViewController-生命周期"><a href="#UIViewController-生命周期" class="headerlink" title="UIViewController 生命周期"></a>UIViewController 生命周期</h2><p> ViewController 生命周期的第一步是初始化。不过具体调用的方法还有所不同。如果使用 StoryBoard 来创建 ViewController，我们不需要显式地去初始化，Storyboard 会自动使用 initWithCoder: 进行初始化。如果不使用 StoryBoard，我们可以使用 init: 函数进行初始化，init: 函数在实现过程中还会调用 initWithNibName:bundle:。 我们应该尽量避免在 VC 外部调用 initWithNibName:bundle:，而是把它放在 VC 的内部<a href="https://stackoverflow.com/questions/2224077/when-should-i-initialize-a-view-controller-using-initwithnibname" target="_blank" rel="noopener">（参考这里）</a>。</p>
+<p>初始化完成后，VC 的生命周期会经过下面几个函数：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">- (void)loadView</span><br><span class="line">- (void)viewDidLoad</span><br><span class="line">- (void)viewWillAppear</span><br><span class="line">- (void)viewWillLayoutSubviews</span><br><span class="line">- (void)viewDidLayoutSubviews</span><br><span class="line">- (void)viewDidAppear</span><br><span class="line">- (void)viewWillDisappear</span><br><span class="line">- (void)viewDidDisappear</span><br></pre></td></tr></table></figure></p>
+<p>假设现在有一个 AViewController(简称 Avc) 和 BViewController (简称 Bvc)，通过 navigationController 的 push 实现 Avc 到 Bvc 的跳转，下面是各个方法的执行执行顺序：</p>
+<ol>
+<li>A viewDidLoad  </li>
+<li>A viewWillAppear  </li>
+<li>A viewDidAppear  </li>
+<li>B viewDidLoad  </li>
+<li>A viewWillDisappear  </li>
+<li>B viewWillAppear  </li>
+<li>A viewDidDisappear  </li>
+<li><p>B viewDidAppear<br>如果再从 Bvc 跳回 Avc，会产生下面的执行顺序：</p>
+</li>
+<li><p>B viewWillDisappear  </p>
+</li>
+<li>A viewWillAppear  </li>
+<li>B viewDidDisappear  </li>
+<li>A viewDidAppear<br>可见 viewDidLoad 只会调用一次，再第二次跳回 Avc 的时候，AViewController 仍然存在于内存中，也就不需要 load 了。</li>
+</ol>
+<p>注意上面的生命周期中都没有提到有关 ViewController 销毁的内容，在 iOS 4 &amp; 5 中 ViewController 中有一个 viewDidUnload 方法。当内存不足，应用收到 Memory warning 时，系统会自动调用当前没在界面上的 ViewController 的 viewDidUnload 方法。 通常情况下，这些未显示在界面上的 ViewController 是 UINavigationController Push 栈中未在栈顶的 ViewController，以及 UITabBarViewController 中未显示的子 ViewController。这些 View Controller 都会在 Memory Warning 事件发生时，被系统自动调用 viewDidUnload 方法。</p>
+<p>从 iOS 6 开始，viewDidUnload 方法被废弃掉了，应用受到 memory warning 时也不会再调用 viewDidUnload 方法。我们可以通过重载 - (void)didReceiveMemoryWarning 和 - (void)dealloc 来进行清理工作。</p>
 
       
     </div>
@@ -367,8 +372,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/10/13/Protocol-Category-和-Extension/" rel="next" title="Protocol, Category 和 Extension">
-                <i class="fa fa-chevron-left"></i> Protocol, Category 和 Extension
+              <a href="/2018/10/14/UIView/" rel="next" title="UIView">
+                <i class="fa fa-chevron-left"></i> UIView
               </a>
             
           </div>
@@ -376,10 +381,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/10/14/Block-进阶/" rel="prev" title="Block 进阶">
-                Block 进阶 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -502,7 +503,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Block-语法"><span class="nav-number">1.</span> <span class="nav-text">Block 语法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Block-可以捕获外部变量"><span class="nav-number">2.</span> <span class="nav-text">Block 可以捕获外部变量</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#UIViewController-生命周期"><span class="nav-number">1.</span> <span class="nav-text">UIViewController 生命周期</span></a></li></ol></div>
             
 
           </div>

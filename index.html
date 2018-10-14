@@ -249,6 +249,326 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/14/UIViewController/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="李">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SixSixSix">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/10/14/UIViewController/" itemprop="url">UIViewController</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-14T18:24:28+08:00">
+                2018-10-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>UIViewController（视图控制器），顾名思义，是 MVC 设计模式中的控制器部分。UIViewController 在 UIKit 中主要功能是用于控制画面的切换，其中的 view 属性（UIView 类型）管理整个画面的外观。</p>
+<h2 id="UIViewController-生命周期"><a href="#UIViewController-生命周期" class="headerlink" title="UIViewController 生命周期"></a>UIViewController 生命周期</h2><p> ViewController 生命周期的第一步是初始化。不过具体调用的方法还有所不同。如果使用 StoryBoard 来创建 ViewController，我们不需要显式地去初始化，Storyboard 会自动使用 initWithCoder: 进行初始化。如果不使用 StoryBoard，我们可以使用 init: 函数进行初始化，init: 函数在实现过程中还会调用 initWithNibName:bundle:。 我们应该尽量避免在 VC 外部调用 initWithNibName:bundle:，而是把它放在 VC 的内部<a href="https://stackoverflow.com/questions/2224077/when-should-i-initialize-a-view-controller-using-initwithnibname" target="_blank" rel="noopener">（参考这里）</a>。</p>
+<p>初始化完成后，VC 的生命周期会经过下面几个函数：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">- (void)loadView</span><br><span class="line">- (void)viewDidLoad</span><br><span class="line">- (void)viewWillAppear</span><br><span class="line">- (void)viewWillLayoutSubviews</span><br><span class="line">- (void)viewDidLayoutSubviews</span><br><span class="line">- (void)viewDidAppear</span><br><span class="line">- (void)viewWillDisappear</span><br><span class="line">- (void)viewDidDisappear</span><br></pre></td></tr></table></figure></p>
+<p>假设现在有一个 AViewController(简称 Avc) 和 BViewController (简称 Bvc)，通过 navigationController 的 push 实现 Avc 到 Bvc 的跳转，下面是各个方法的执行执行顺序：</p>
+<ol>
+<li>A viewDidLoad  </li>
+<li>A viewWillAppear  </li>
+<li>A viewDidAppear  </li>
+<li>B viewDidLoad  </li>
+<li>A viewWillDisappear  </li>
+<li>B viewWillAppear  </li>
+<li>A viewDidDisappear  </li>
+<li><p>B viewDidAppear<br>如果再从 Bvc 跳回 Avc，会产生下面的执行顺序：</p>
+</li>
+<li><p>B viewWillDisappear  </p>
+</li>
+<li>A viewWillAppear  </li>
+<li>B viewDidDisappear  </li>
+<li>A viewDidAppear<br>可见 viewDidLoad 只会调用一次，再第二次跳回 Avc 的时候，AViewController 仍然存在于内存中，也就不需要 load 了。</li>
+</ol>
+<p>注意上面的生命周期中都没有提到有关 ViewController 销毁的内容，在 iOS 4 &amp; 5 中 ViewController 中有一个 viewDidUnload 方法。当内存不足，应用收到 Memory warning 时，系统会自动调用当前没在界面上的 ViewController 的 viewDidUnload 方法。 通常情况下，这些未显示在界面上的 ViewController 是 UINavigationController Push 栈中未在栈顶的 ViewController，以及 UITabBarViewController 中未显示的子 ViewController。这些 View Controller 都会在 Memory Warning 事件发生时，被系统自动调用 viewDidUnload 方法。</p>
+<p>从 iOS 6 开始，viewDidUnload 方法被废弃掉了，应用受到 memory warning 时也不会再调用 viewDidUnload 方法。我们可以通过重载 - (void)didReceiveMemoryWarning 和 - (void)dealloc 来进行清理工作。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/14/UIView/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="李">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SixSixSix">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/10/14/UIView/" itemprop="url">UIView</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-14T17:59:10+08:00">
+                2018-10-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>UIView 表示屏幕上的一块矩形区域，负责渲染区域的内容，并且响应该区域内发生的触摸事件。它在iOS App中占有绝对重要的地位，因为iOS中几乎所有可视化控件都是 UIView 的子类。</p>
+<p>UIView 可以负责以下几种任务：</p>
+<ul>
+<li>绘制和动画</li>
+<li>布局和子视图管理</li>
+<li>事件处理</li>
+</ul>
+<h2 id="绘制和动画"><a href="#绘制和动画" class="headerlink" title="绘制和动画"></a>绘制和动画</h2><h3 id="视图绘制"><a href="#视图绘制" class="headerlink" title="视图绘制"></a>视图绘制</h3><p>UIView 是按需绘制的，当整个视图或者视图的一部分由于布局变化，变成可见的，系统会要求视图进行绘制。对于那些需要使用 UIKit 或者 CoreGraphics 进行自定义绘制的视图，系统会调用drawRect:方法进行绘制。</p>
+<p>当视图内容发生变化时，需要调用setNeedsDisplay或者setNeedsDisplayInRect:方法，告诉系统该重新绘制这个视图了。调用这个方法之后，系统会在下一个绘制周期更新这个视图的内容。由于系统要等到下一个绘制周期才真正进行绘制，可以一次性对多个视图调用setNeedsDisplay，它们会同时被更新。</p>
+<h3 id="视图的几何属性"><a href="#视图的几何属性" class="headerlink" title="视图的几何属性"></a>视图的几何属性</h3><p>视图有 frame，center，bounds 等几个基本几何属性，其中:</p>
+<ul>
+<li>frame 使用的最多，其坐标位置都是相对于父视图的，可以用于确定本视图在父视图中的位置和其自身的大小</li>
+<li>center 的坐标位置也是相对于父视图的，通常用于移动，旋转等动画操作</li>
+<li>bounds 是相对于自身的，通常情况下就是（0, 0, width, height)， bounds 的含义可以认为是当前 view 被允许绘制的范围</li>
+</ul>
+<h3 id="视图的-ContentMode"><a href="#视图的-ContentMode" class="headerlink" title="视图的 ContentMode"></a>视图的 ContentMode</h3><p>视图在初次绘制完成后，系统会对绘制结果进行快照，之后尽可能地使用快照，避免重新绘制。如果视图的几何属性发生改变，系统会根据视图的 contentMode 来决定如何改变显示效果。</p>
+<p>默认的 contentMode 是 UIViewContentModeScaleToFill ，系统会拉伸当前的快照，使其符合新的 frame 尺寸。大部分 contentMode 都会对当前的快照进行拉伸或者移动等操作。如果需要重新绘制，可以把 contentMode 设置为 UIViewContentModeRedraw，强制视图在改变大小之类的操作时调用drawRect:重绘。</p>
+<h3 id="动画"><a href="#动画" class="headerlink" title="动画"></a>动画</h3><p>可以以动画的形式改变视图的下面这些属性，只需要告诉系统动画开始和结束时的数值，系统会自动处理中间的过渡过程。</p>
+<ul>
+<li>frame</li>
+<li>bounds</li>
+<li>center</li>
+<li>transform</li>
+<li>alpha</li>
+<li>backgroundColor</li>
+<li>contentStretch</li>
+</ul>
+<h2 id="布局和子视图管理"><a href="#布局和子视图管理" class="headerlink" title="布局和子视图管理"></a>布局和子视图管理</h2><p>除了提供视图本身的内容之外，一个视图也可以表现得像一个容器。当一个视图包含其他视图时，两个视图之间就创建了一个父子关系。在这个关系中子视图被称为 subView ，父视图被称为 superView 。一个视图可以包含多个子视图，它们被存放在这个视图的 subviews 数组里。添加，删除，以及操作这些子视图的相对位置的函数如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">addSubview:</span><br><span class="line">insertSubview:...</span><br><span class="line">bringSubviewToFront:</span><br><span class="line">sendSubviewToBack:</span><br><span class="line">exchangeSubviewAtIndex:withSubviewAtIndex:</span><br><span class="line">removeFromSuperview（子视图调用）</span><br></pre></td></tr></table></figure></p>
+<h3 id="AutoResizing-和-Constraint"><a href="#AutoResizing-和-Constraint" class="headerlink" title="AutoResizing 和 Constraint"></a>AutoResizing 和 Constraint</h3><p>当一个视图的大小改变时，它的子视图的位置和大小也需要相应地改变。UIView 支持自动布局，也可以手动对子视图进行布局。</p>
+<p>当下列这些事件发生时，需要进行布局操作：</p>
+<ul>
+<li>视图的 bounds 大小改变</li>
+<li>用户界面旋转，通常会导致根视图控制器的大小改变</li>
+<li>视图的 layer 层的 Core Animation sublayers 发生改变</li>
+<li>程序调用视图的setNeedsLayout或layoutIfNeeded方法</li>
+<li>程序调用视图 layer 的setNeedsLayout方法 </li>
+</ul>
+<h4 id="Auto-Resizing"><a href="#Auto-Resizing" class="headerlink" title="Auto Resizing"></a>Auto Resizing</h4><p>视图的autoresizesSubviews属性决定了在视图大小发生变化时，如何自动调节子视图。</p>
+<p>可以使用的代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">UIViewAutoresizingNone</span><br><span class="line">UIViewAutoresizingFlexibleHeight</span><br><span class="line">UIViewAutoresizingFlexibleWidth</span><br><span class="line">UIViewAutoresizingFlexibleLeftMargin</span><br><span class="line">UIViewAutoresizingFlexibleRightMargin</span><br><span class="line">UIViewAutoresizingFlexibleBottomMargin</span><br><span class="line">UIViewAutoresizingFlexibleTopMargin</span><br><span class="line">可以通过位运算符将它们组合起来，例如UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth。</span><br></pre></td></tr></table></figure></p>
+<h4 id="Constraint"><a href="#Constraint" class="headerlink" title="Constraint"></a>Constraint</h4><p>Constraint 是另一种用于自动布局的方法。本质上，Constraint 就是对 UIView 之间两个属性的一个约束：</p>
+<p>attribute1 == multiplier × attribute2 + constant<br>其中方程两边不一定是等于关系，也可以是大于等于之类的关系。</p>
+<h4 id="自定义-layout"><a href="#自定义-layout" class="headerlink" title="自定义 layout"></a>自定义 layout</h4><p>UIView 当中提供了一个 layoutSubviews 函数，UIView 的子类可以重载这个函数，以实现更加复杂和精细的子 View 布局。</p>
+<p>苹果文档专门强调了，应该只在上面提到的 Autoresizing 和 Constraint 机制不能实现所需要的效果时，才使用 layoutSubviews。而且，layoutSubviews 方法只能被系统触发调用，程序员不能手动直接调用该方法。</p>
+<p> layoutSubviews 方法调用具体有下面几种情况：</p>
+<ol>
+<li>在父 view 的 autoresize mask 为 ON 的情况下，addSubview 会导致被 add 的 view 调用 layoutSubviews, 同时 add 的 target view 以及它所有的子 view 都会被调用。</li>
+<li>setFrame 当新的 frame 和 旧的不同时（即 view 的大小改变时）会调用 layoutSubviews</li>
+<li>滚动一个 UIScollView 会导致这个 scrollView 以及它的父 View 调用 layoutSubviews</li>
+<li>旋转设备会导致当前所响应的 ViewController 的主 View 调用 layoutSubviews</li>
+<li>改变 View 的 size 会导致父 View 调用 layoutSubviews</li>
+<li>removeFromSuperview 也会导致父 View 调用 layoutSubviews</li>
+</ol>
+<h2 id="事件处理"><a href="#事件处理" class="headerlink" title="事件处理"></a>事件处理</h2><p>UIView 是 UIResponder 的子类，可以响应触控事件。</p>
+<p>通常可以使用addGestureRecognizer:添加手势识别器来响应触控事件，如果需要手动处理，则按需要重载 UIView 中的下面四个函数：</p>
+<ul>
+<li>touchesBegan:withEvent:</li>
+<li>touchesMoved:withEvent:</li>
+<li>touchesEnded:withEvent:</li>
+<li>touchesCancelled:withEvent:</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/14/Block-进阶/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -322,7 +642,7 @@
           
             <h2 id="使用-Block-时的注意事项"><a href="#使用-Block-时的注意事项" class="headerlink" title="使用 Block 时的注意事项"></a>使用 Block 时的注意事项</h2><p>在非 ARC 的情况下，对于 block 类型的属性应该使用 copy ，因为 block 需要维持其作用域中捕获的变量。在 ARC 中编译器会自动对 block 进行 copy 操作，因此使用 strong 或者 copy 都可以，没有什么区别，但是苹果仍然建议使用 copy 来指明编译器的行为。</p>
 <p>block 在捕获外部变量的时候，会保持一个强引用，当在 block 中捕获 self 时，由于对象会对 block 进行 copy，于是便形成了强引用循环：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">@interface XYZBlockKeeper : NSObject</span><br><span class="line">@property (copy) void (^block)(void);</span><br><span class="line">@end</span><br></pre></td></tr></table></figure></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">@implementation XYZBlockKeeper</span><br><span class="line">- (void)configureBlock &#123;</span><br><span class="line">    self.block = ^&#123;</span><br><span class="line">        [self doSomething];  </span><br><span class="line">                               </span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br><span class="line">...</span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">@implementation XYZBlockKeeper</span><br><span class="line">- (void)configureBlock &#123;</span><br><span class="line">    self.block = ^&#123;</span><br><span class="line">        [self doSomething];  </span><br><span class="line">                               </span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
 <p>为了避免强引用循环，最好捕获一个 self 的弱引用：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">- (void)configureBlock &#123;</span><br><span class="line">    XYZBlockKeeper * __weak weakSelf = self;</span><br><span class="line">    self.block = ^&#123;</span><br><span class="line">        [weakSelf doSomething];   </span><br><span class="line">                                  </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>使用弱引用会带来另一个问题，weakSelf 有可能会为 nil，如果多次调用 weakSelf 的方法，有可能在 block 执行过程中 weakSelf 变为 nil。因此需要在 block 中将 weakSelf “强化”<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">__weak typeof(self) weakSelf = self;</span><br><span class="line">NSBlockOperation *op = [[NSBlockOperation alloc] init];</span><br><span class="line">[op addExecutionBlock:^ &#123;</span><br><span class="line">    __strong typeof(self) strongSelf = weakSelf;</span><br><span class="line">    [strongSelf doSomething];</span><br><span class="line">    [strongSelf doMoreThing];</span><br><span class="line">&#125;];</span><br><span class="line">[someOperationQueue addOperation:op];</span><br></pre></td></tr></table></figure></p>
 <p>doSomething 和 doMoreThing 要么全执行成功，要么全失败，不会出现一个成功一个失败，即执行到中间 self 变成 nil 的情况。</p>
@@ -834,7 +1154,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
