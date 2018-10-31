@@ -1,7 +1,1604 @@
-<!DOCTYPE html><html lang="zh-Hans"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description"><title>SixSixSix</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/normalize/8.0.0/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/1.0.0/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">SixSixSix</h1><a id="logo" href="/.">SixSixSix</a><p class="description"></p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> Start</i></a><a href="/archives/"><i class="fa fa-archive"> Archiv</i></a><a href="/about/"><i class="fa fa-user"> Über</i></a><a href="/atom.xml"><i class="fa fa-rss"> RSS</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title"><a href="/2018/10/31/动画/">动画</a></h1><div class="post-meta">2018-10-31</div><div class="post-content"><h2 id="UIView-Animation"><a href="#UIView-Animation" class="headerlink" title="UIView Animation"></a>UIView Animation</h2><h3 id="简单动画"><a href="#简单动画" class="headerlink" title="简单动画"></a>简单动画</h3><p>对于 UIView 上简单的动画，iOS 提供了很方便的函数：</p></div><p class="readmore"><a href="/2018/10/31/动画/">Mehr lesen</a></p></div><div class="post"><h1 class="post-title"><a href="/2018/10/14/UIViewController/">UIViewController</a></h1><div class="post-meta">2018-10-14</div><div class="post-content"><p>UIViewController（视图控制器），顾名思义，是 MVC 设计模式中的控制器部分。UIViewController 在 UIKit 中主要功能是用于控制画面的切换，其中的 view 属性（UIView 类型）管理整个画面的外观。</p>
-<h2 id="UIViewController-生命周期"><a href="#UIViewController-生命周期" class="headerlink" title="UIViewController 生命周期"></a>UIViewController 生命周期</h2><p> ViewController 生命周期的第一步是初始化。不过具体调用的方法还有所不同。如果使用 StoryBoard 来创建 ViewController，我们不需要显式地去初始化，Storyboard 会自动使用 initWithCoder: 进行初始化。如果不使用 StoryBoard，我们可以使用 init: 函数进行初始化，init: 函数在实现过程中还会调用 initWithNibName:bundle:。 我们应该尽量避免在 VC 外部调用 initWithNibName:bundle:，而是把它放在 VC 的内部<a href="https://stackoverflow.com/questions/2224077/when-should-i-initialize-a-view-controller-using-initwithnibname" target="_blank" rel="noopener">（参考这里）</a>。</p></div><p class="readmore"><a href="/2018/10/14/UIViewController/">Mehr lesen</a></p></div><div class="post"><h1 class="post-title"><a href="/2018/10/14/UIView/">UIView</a></h1><div class="post-meta">2018-10-14</div><div class="post-content"><p>UIView 表示屏幕上的一块矩形区域，负责渲染区域的内容，并且响应该区域内发生的触摸事件。它在iOS App中占有绝对重要的地位，因为iOS中几乎所有可视化控件都是 UIView 的子类。</p>
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="SixSixSix">
+<meta property="og:url" content="http://yoursite.com/index.html">
+<meta property="og:site_name" content="SixSixSix">
+<meta property="og:locale" content="zh-Hans">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SixSixSix">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/"/>
+
+
+
+
+
+  <title>SixSixSix</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left 
+  page-home">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">SixSixSix</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+  <section id="posts" class="posts-expand">
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/31/动画/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="李">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SixSixSix">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/10/31/动画/" itemprop="url">动画</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-31T12:07:31+08:00">
+                2018-10-31
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="UIView-Animation"><a href="#UIView-Animation" class="headerlink" title="UIView Animation"></a>UIView Animation</h2><h3 id="简单动画"><a href="#简单动画" class="headerlink" title="简单动画"></a>简单动画</h3><p>对于 UIView 上简单的动画，iOS 提供了很方便的函数：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">+ animateWithDuration:animations:</span><br></pre></td></tr></table></figure>
+<p>第一个参数是动画的持续时间，第二个参数是一个 block，在 animations block 中对 UIView 的属性进行调整，设置 UIView 动画结束后最终的效果，iOS 就会自动补充中间帧，形成动画。</p>
+<p>可以更改的属性有:</p>
+<ul>
+<li>frame</li>
+<li>bounds</li>
+<li>center</li>
+<li>transform</li>
+<li>alpha</li>
+<li>backgroundColor</li>
+<li>contentStretch</li>
+</ul>
+<p>这些属性大都是 View 的基本属性，下面是一个例子，这个例子中的动画会同时改变 View 的 frame，backgroundColor 和 alpha ：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[UIView animateWithDuration:2.0 animations:^&#123;</span><br><span class="line">    myView.frame = CGRectMake(50, 200, 200, 200);</span><br><span class="line">    myView.backgroundColor = [UIColor blueColor];</span><br><span class="line">    myView.alpha = 0.7;</span><br><span class="line">&#125;];</span><br></pre></td></tr></table></figure>
+<p>其中有一个比较特殊的 transform 属性，它的类型是 CGAffineTransform，即 2D 仿射变换，这是个数学中的概念，用一个三维矩阵来表述 2D 图形的矢量变换。用 transform 属性对 View 进行：</p>
+<ul>
+<li>旋转</li>
+<li>缩放</li>
+<li>其他自定义 2D 变换</li>
+</ul>
+<p>iOS 提供了下面的函数可以创建简单的 2D 变换：</p>
+<ul>
+<li>CGAffineTransformMakeScale</li>
+<li>CGAffineTransformMakeRotation</li>
+<li>CGAffineTransformMakeTranslation</li>
+</ul>
+<p>例如下面的代码会将 View 缩小至原来的 1/4 大小：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[UIView animateWithDuration:2.0 animations:^&#123;</span><br><span class="line">    myView.transform = CGAffineTransformMakeScale(0.5, 0.5);</span><br><span class="line">&#125;];</span><br></pre></td></tr></table></figure>
+<h3 id="调节参数"><a href="#调节参数" class="headerlink" title="调节参数"></a>调节参数</h3><p>完整版的 animate 函数其实是这样的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">+ animateWithDuration:delay:options:animations:completion:</span><br></pre></td></tr></table></figure>
+<p>可以通过 delay 参数调节让动画延迟产生，同时还一个 options 选项可以调节动画进行的方式。可用的 options 可分为两类：</p>
+<h4 id="控制过程"><a href="#控制过程" class="headerlink" title="控制过程"></a>控制过程</h4><p>例如 UIViewAnimationOptionRepeat 可以让动画反复进行， UIViewAnimationOptionAllowUserInteraction 可以让允许用户对动画进行过程中同 View 进行交互（默认是不允许的）</p>
+<h4 id="控制速度"><a href="#控制速度" class="headerlink" title="控制速度"></a>控制速度</h4><p>动画的进行速度可以用速度曲线来表示（参考<a href="https://zhuanlan.zhihu.com/p/20031427#!" target="_blank" rel="noopener">这里</a>），提供的选项例如 UIViewAnimationOptionCurveEaseIn 是先慢后快，UIViewAnimationOptionCurveEaseOut 是先快后慢。</p>
+<p>不同的选项直接可以通过“与”操作进行合并，同时使用，例如:</p>
+<p>UIViewAnimationOptionRepeat | UIViewAnimationOptionAllowUserInteraction </p>
+<h3 id="关键帧动画"><a href="#关键帧动画" class="headerlink" title="关键帧动画"></a>关键帧动画</h3><p>上面介绍的动画中，我们只能控制开始和结束时的效果，然后由系统补全中间的过程，有些时候我们需要自己设定若干关键帧，实现更复杂的动画效果，这时候就需要关键帧动画的支持了。下面是一个示例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[UIView animateKeyframesWithDuration:2.0 delay:0.0 options:UIViewKeyframeAnimationOptionRepeat | UIViewKeyframeAnimationOptionAutoreverse animations:^&#123;</span><br><span class="line"></span><br><span class="line">    [UIView addKeyframeWithRelativeStartTime:0.0 relativeDuration:0.5 animations:^&#123;</span><br><span class="line">        self.myView.frame = CGRectMake(10, 50, 100, 100);</span><br><span class="line">    &#125;];</span><br><span class="line"></span><br><span class="line">    [UIView addKeyframeWithRelativeStartTime: 0.5 relativeDuration:0.3 animations:^&#123;</span><br><span class="line">        self.myView.frame = CGRectMake(20, 100, 100, 100);</span><br><span class="line">    &#125;];</span><br><span class="line"></span><br><span class="line">    [UIView addKeyframeWithRelativeStartTime:0.8 relativeDuration:0.2 animations:^&#123;</span><br><span class="line">        self.myView.transform = CGAffineTransformMakeScale(0.5, 0.5);</span><br><span class="line">    &#125;];</span><br><span class="line">&#125; completion:nil];</span><br></pre></td></tr></table></figure>
+<p>这个例子添加了三个关键帧，在外面的 animateKeyframesWithDuration 中我们设置了持续时间为 2.0 秒，这是真实意义上的时间，里面的 startTime 和 relativeDuration 都是相对时间。以第一个为例，startTime 为 0.0，relativeTime 为 0.5，这个动画会直接开始，持续时间为 2.0 X 0.5 = 1.0 秒，下面第二个的开始时间是 0.5，正好承接上一个结束，第三个同理，这样三个动画就变成连续的动画了。 </p>
+<h3 id="View-的转换"><a href="#View-的转换" class="headerlink" title="View 的转换"></a>View 的转换</h3><p>iOS 还提供了两个函数，用于进行两个 View 之间通过动画换场：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">+ transitionWithView:duration:options:animations:completion:</span><br><span class="line">+ transitionFromView:toView:duration:options:completion:</span><br></pre></td></tr></table></figure>
+<p>需要注意的是，换场动画会在这两个 View 共同的父 View 上进行，在写动画之前，先要设计好 View 的继承结构。<br>同样，View 之间的转换也有很多选项可选，例如 UIViewAnimationOptionTransitionFlipFromLeft 从左边翻转，UIViewAnimationOptionTransitionCrossDissolve 渐变等等。</p>
+<h2 id="CALayer-Animation"><a href="#CALayer-Animation" class="headerlink" title="CALayer Animation"></a>CALayer Animation</h2><p>UIView 的动画简单易用，但是能实现的效果相对有限，上面介绍的 UIView 的几种动画方式，实际上是对底层 CALayer 动画的一种封装。直接使用 CALayer 层的动画方法可以实现更多高级的动画效果。</p>
+<h3 id="基本动画（CABasicAnimation）"><a href="#基本动画（CABasicAnimation）" class="headerlink" title="基本动画（CABasicAnimation）"></a>基本动画（CABasicAnimation）</h3><p>CABasicAnimation 用于创建一个 CALayer 上的基本动画效果，下面是一个例子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@&quot;position.x&quot;];</span><br><span class="line">animation.toValue = @200;</span><br><span class="line">animation.duration = 0.8;</span><br><span class="line">animation.repeatCount = 5;</span><br><span class="line">animation.beginTime = CACurrentMediaTime() + 0.5;</span><br><span class="line">animation.fillMode = kCAFillModeRemoved;</span><br><span class="line">[self.myView.layer addAnimation:animation forKey:nil];</span><br></pre></td></tr></table></figure>
+<h4 id="KeyPath"><a href="#KeyPath" class="headerlink" title="KeyPath"></a>KeyPath</h4><p>这里我们使用了 animationWithKeyPath 这个方法来改变 layer 的属性，可以使用的属性有很多，具体可以参考<a href="https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/CoreAnimation_guide/AnimatableProperties/AnimatableProperties.html" target="_blank" rel="noopener">这里</a>和<a href="http://www.cnblogs.com/pengyingh/articles/2379631.html" target="_blank" rel="noopener">这里</a>。其中很多属性在前面介绍的 UIView 动画部分我们也看到过，进一步验证了 UIView 的动画方法是对底层 CALayer 的一种封装。</p>
+<p>需要注意的一点是，上面我们使用了 position 属性， layer 的这个 position 属性和 View 的 frame 以及 bounds 属性都不相同，而是和 Layer 的 anchorPoint 有关，可以由下面的公式计算得到：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">position.x = frame.origin.x + 0.5 * bounds.size.width；  </span><br><span class="line">position.y = frame.origin.y + 0.5 * bounds.size.height；</span><br></pre></td></tr></table></figure>
+<p>关于 anchorPoint 和 position 属性的以及具体计算的原理可以参考<a href="http://wonderffee.github.io/blog/2013/10/13/understand-anchorpoint-and-position/" target="_blank" rel="noopener">这篇文章。</a></p>
+<h4 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h4><p>CABasicAnimation 的属性有下面几个：</p>
+<ul>
+<li>beginTime</li>
+<li>duration</li>
+<li>fromValue</li>
+<li>toValue</li>
+<li>byValue</li>
+<li>repeatCount</li>
+<li>autoreverses</li>
+<li>timingFunction</li>
+</ul>
+<p>可以看到，其中 beginTime，duration，repeatCount 等属性和上面在 UIView 中使用到的 duration，UIViewAnimationOptionRepeat 等选项是相对应的，不过这里的选项能够提供更多的扩展性。</p>
+<p>需要注意的是 fromValue，toValue，byValue 这几个选项，支持的设置模式有下面几种：</p>
+<ul>
+<li>设置 fromValue 和 toValue：从 fromValue 变化到 toValue</li>
+<li>设置 fromValue 和 byValue：从 fromValue 变化到 fromValue + byValue</li>
+<li>设置 byValue 和 toValue：从 toValue - byValue 变化到 toValue</li>
+<li>设置 fromValue： 从 fromValue 变化到属性当前值</li>
+<li>设置 toValue：从属性当前值变化到 toValue</li>
+<li>设置 byValue：从属性当前值变化到属性当前值 + toValue</li>
+</ul>
+<p>看起来挺复杂，其实概括起来基本就是，如果某个值不设置，就是用这个属性当前的值。</p>
+<p>另外，可以看到上面我们使用的: </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">animation.toValue = @200;</span><br></pre></td></tr></table></figure>
+<p>而不是直接使用 200，因为 toValue 之类的属性为 id 类型，或者像这样使用 @ 符号，或者使用：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">animation.toValue = [NSNumber numberWithInt:200];</span><br></pre></td></tr></table></figure>
+<p>最后一个比较有意思的是 timingFunction 属性，使用这个属性可以自定义动画的运动曲线（节奏，pacing），系统提供了五种值可以选择：</p>
+<ul>
+<li>kCAMediaTimingFunctionLinear 线性动画</li>
+<li>kCAMediaTimingFunctionEaseIn 先快后慢</li>
+<li>kCAMediaTimingFunctionEaseOut 先慢后快</li>
+<li>kCAMediaTimingFunctionEaseInEaseOut 先慢后快再慢</li>
+<li>kCAMediaTimingFunctionDefault 默认，也属于中间比较快</li>
+</ul>
+<p>此外，我们还可以使用 [CAMediaTimingFunction functionWithControlPoints] 方法来自定义运动曲线，<a href="http://netcetera.org/camtf-playground.html" target="_blank" rel="noopener">这个网站</a>提供了一个将参数调节可视化的效果。</p>
+<h3 id="关键帧动画（CAKeyframeAnimation）"><a href="#关键帧动画（CAKeyframeAnimation）" class="headerlink" title="关键帧动画（CAKeyframeAnimation）"></a>关键帧动画（CAKeyframeAnimation）</h3><p>同 UIView 中的类似，CALayer 层也提供了关键帧动画的支持，CAKeyFrameAnimation 和 CABasicAnimation 都继承自 CAPropertyAnimation，因此它有具有上面提到的那些属性，此外，CAKeyFrameAnimation 还有特有的几个属性。</p>
+<h4 id="values-和-keyTimes"><a href="#values-和-keyTimes" class="headerlink" title="values 和 keyTimes"></a>values 和 keyTimes</h4><p>使用 values 和 keyTimes 可以共同确定一个动画的若干关键帧，示例代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">CAKeyframeAnimation *anima = [CAKeyframeAnimation animationWithKeyPath:@&quot;transform.rotation&quot;];</span><br><span class="line">NSValue *value1 = [NSNumber numberWithFloat:-M_PI/180*4];</span><br><span class="line">NSValue *value2 = [NSNumber numberWithFloat:M_PI/180*4];</span><br><span class="line">NSValue *value3 = [NSNumber numberWithFloat:-M_PI/180*4];</span><br><span class="line">anima.values = @[value1,value2,value3];</span><br><span class="line">// anima.keyTimes = @[@0.0, @0.5, @1.0];</span><br><span class="line">anima.repeatCount = MAXFLOAT;</span><br><span class="line"></span><br><span class="line">[_demoView.layer addAnimation:anima forKey:@&quot;shakeAnimation&quot;];</span><br></pre></td></tr></table></figure>
+<p>可以看到上面这个动画共有三个关键帧，如果没有指定 keyTimes 则各个关键帧会平分整个动画的时间(duration)。</p>
+<h4 id="path"><a href="#path" class="headerlink" title="path"></a>path</h4><p>使用 path 属性可以设置一个动画的运动路径，注意 path只对 CALayer 的 anchorPoint 和 position 属性起作用，另外如果你设置了 path ，那么 values 将被忽略。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">CAKeyframeAnimation *anima = [CAKeyframeAnimation animationWithKeyPath:@&quot;position&quot;];</span><br><span class="line">UIBezierPath *path = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(SCREEN_WIDTH/2-100, SCREEN_HEIGHT/2-100, 200, 200)];</span><br><span class="line">anima.path = path.CGPath;</span><br><span class="line">anima.duration = 2.0f;</span><br><span class="line">[_demoView.layer addAnimation:anima forKey:@&quot;pathAnimation&quot;];</span><br></pre></td></tr></table></figure>
+<h3 id="组动画（CAAnimationGroup"><a href="#组动画（CAAnimationGroup" class="headerlink" title="组动画（CAAnimationGroup)"></a>组动画（CAAnimationGroup)</h3><p>组动画可以将一组动画组合在一起，所有动画对象可以同时运行，示例代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">CAAnimationGroup *group = [[CAAnimationGroup alloc] init];</span><br><span class="line">CABasicAnimation *animationOne = [CABasicAnimation animationWithKeyPath:@&quot;transform.scale&quot;];</span><br><span class="line"></span><br><span class="line">animationOne.toValue = @2.0;</span><br><span class="line">animationOne.duration = 1.0;</span><br><span class="line"></span><br><span class="line">CABasicAnimation *animationTwo = [CABasicAnimation animationWithKeyPath:@&quot;position.x&quot;];</span><br><span class="line">animationTwo.toValue = @400;</span><br><span class="line">animationTwo.duration = 1.0;</span><br><span class="line"></span><br><span class="line">[group setAnimations:@[animationOne, animationTwo]];</span><br><span class="line">[self.myView.layer addAnimation:group forKey:nil];</span><br></pre></td></tr></table></figure>
+<p>需要注意的是，一个 group 组内的某个动画的持续时间（duration），如果超过了整个组的动画持续时间，那么多出的动画时间将不会被展示。例如一个 group 的持续时间是 5s，而组内一个动画持续时间为 10s ，那么这个 10s 的动画只会展示前 5s 。</p>
+<h3 id="切换动画（CATransition）"><a href="#切换动画（CATransition）" class="headerlink" title="切换动画（CATransition）"></a>切换动画（CATransition）</h3><p>CATransition 可以用于 View 或 ViewController 直接的换场动画：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">self.myView.backgroundColor = [UIColor blueColor];</span><br><span class="line">CATransition *trans = [CATransition animation];</span><br><span class="line">trans.duration = 1.0;</span><br><span class="line">trans.type = @&quot;push&quot;;</span><br><span class="line"></span><br><span class="line">[self.myView.layer addAnimation:trans forKey:nil];</span><br><span class="line"></span><br><span class="line">// 这句放在下面也可以</span><br><span class="line">// self.myView.backgroundColor = [UIColor blueColor];</span><br></pre></td></tr></table></figure>
+<p>为什么改变颜色放在前后都可以呢？具体的解释可以参考 SO 上的<a href="https://stackoverflow.com/questions/2233692/how-does-catransition-work" target="_blank" rel="noopener">这个回答</a>。简单来说就是动画和绘制之间并不冲突。</p>
+<h2 id="更高级的动画效果"><a href="#更高级的动画效果" class="headerlink" title="更高级的动画效果"></a>更高级的动画效果</h2><h3 id="CADisplayLink"><a href="#CADisplayLink" class="headerlink" title="CADisplayLink"></a>CADisplayLink</h3><p>CADisplayLink 是一个计时器对象，可以周期性的调用某个 selecor 方法。相比 NSTimer ，它可以让我们以和屏幕刷新率同步的频率（每秒60次）来调用绘制函数，实现界面连续的不停重绘，从而实现动画效果。</p>
+<p>示例代码（修改自<a href="http://www.cocoachina.com/ios/20150320/11382.html" target="_blank" rel="noopener">这里</a>)：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">“#import &quot;BlockView.h&quot;</span><br><span class="line"></span><br><span class="line">@implementation BlockView</span><br><span class="line"></span><br><span class="line">- (void)startAnimationFrom:(CGFloat)from To:(CGFloat)to &#123;</span><br><span class="line">    self.from = from;</span><br><span class="line">    self.to = to;</span><br><span class="line">    if (self.displayLink == nil) &#123;</span><br><span class="line">        self.displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(tick:)];</span><br><span class="line">        [self.displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 重复调用这个方法以重绘整个 View</span><br><span class="line">- (void)tick:(CADisplayLink *)displayLink &#123;</span><br><span class="line">    [self setNeedsDisplay];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)endAnimation &#123;</span><br><span class="line">    [self.displayLink invalidate];</span><br><span class="line">    self.displayLink = nil;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)drawRect:(CGRect)rect &#123;</span><br><span class="line">    CALayer *layer = self.layer.presentationLayer;</span><br><span class="line">    CGFloat progress = 1 - (layer.position.y - self.to) / (self.from - self.to);</span><br><span class="line">    CGFloat height = CGRectGetHeight(rect);</span><br><span class="line">    CGFloat deltaHeight = height / 2 * (0.5 - fabs(progress - 0.5));</span><br><span class="line">    CGPoint topLeft = CGPointMake(0, deltaHeight);</span><br><span class="line">    CGPoint topRight = CGPointMake(CGRectGetWidth(rect), deltaHeight);</span><br><span class="line">    CGPoint bottomLeft = CGPointMake(0, height);</span><br><span class="line">    CGPoint bottomRight = CGPointMake(CGRectGetWidth(rect), height);</span><br><span class="line">    UIBezierPath* path = [UIBezierPath bezierPath];</span><br><span class="line">    [[UIColor blueColor] setFill];</span><br><span class="line">    [path moveToPoint:topLeft];</span><br><span class="line">    [path addQuadCurveToPoint:topRight controlPoint:CGPointMake(CGRectGetMidX(rect), 0)];</span><br><span class="line">    [path addLineToPoint:bottomRight];</span><br><span class="line">    [path addQuadCurveToPoint:bottomLeft controlPoint:CGPointMake(CGRectGetMidX(rect), height - deltaHeight)];</span><br><span class="line">    [path closePath];</span><br><span class="line">    [path fill];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<h3 id="UIDynamicAnimator"><a href="#UIDynamicAnimator" class="headerlink" title="UIDynamicAnimator"></a>UIDynamicAnimator</h3><p>UIDynamicAnimator 是 iOS 7 引入的一个新类，可以创建出具有物理仿真效果的动画，具体提供了下面几种物理仿真行为：</p>
+<p>UIGravityBehavior：重力行为<br>UICollisionBehavior：碰撞行为<br>UISnapBehavior：捕捉行为<br>UIPushBehavior：推动行为<br>UIAttachmentBehavior：附着行为<br>UIDynamicItemBehavior：动力元素行为<br>示例代码如下（来自<a href="https://www.teehanlax.com/blog/introduction-to-uikit-dynamics/" target="_blank" rel="noopener">这里</a>)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">self.animator = [[UIDynamicAnimator alloc] initWithReferenceView:self.view];</span><br><span class="line"></span><br><span class="line">UIGravityBehavior *gravityBehavior = [[UIGravityBehavior alloc] initWithItems:@[self.myView]];</span><br><span class="line">[self.animator addBehavior:gravityBehavior];</span><br><span class="line"></span><br><span class="line">UICollisionBehavior *collisionBehavior = [[UICollisionBehavior alloc] initWithItems:@[self.myView]];</span><br><span class="line">collisionBehavior.translatesReferenceBoundsIntoBoundary = YES;</span><br><span class="line">[self.animator addBehavior:collisionBehavior];</span><br></pre></td></tr></table></figure>
+<p>可以发现这段代码和我们之前写的动画代码有很大不同，在这里 behavior 是用于控制 View 行为的，我们做的操作是把各种不同的 behavior 加到 animator 中。这段代码实现了 View 因为“重力”原因“掉到”地上，落地的同时还有一个碰撞效果。</p>
+<h3 id="CAEmitterLayer"><a href="#CAEmitterLayer" class="headerlink" title="CAEmitterLayer"></a>CAEmitterLayer</h3><p>CAEmitterLayer 是 Core Animation 提供的一个粒子发生器系统，可以用于创建各种粒子动画，例如烟雾，焰火等效果。</p>
+<p>CAEmitterLayer 需要调节的参数很多，可以实现的效果也非常炫酷，具体可参考下面几个网址：</p>
+<ul>
+<li><a href="http://enharmonichq.com/tutorial-particle-systems-in-core-animation-with-caemitterlayer/#prettyPhoto/0/" target="_blank" rel="noopener">http://enharmonichq.com/tutorial-particle-systems-in-core-animation-with-caemitterlayer/#prettyPhoto/0/</a></li>
+<li><a href="https://www.invasivecode.com/weblog/caemitterlayer-and-the-ios-particle-system-lets/?doing_wp_cron=1438657800.4759559631347656250000" target="_blank" rel="noopener">https://www.invasivecode.com/weblog/caemitterlayer-and-the-ios-particle-system-lets/?doing_wp_cron=1438657800.4759559631347656250000</a> </li>
+</ul>
+<p><a href="https://github.com/lexrus/LTMorphingLabel" target="_blank" rel="noopener">LTMorphingLabel</a> 这个项目使用 CAEmitterLayer 实现了各种高端炫酷掉渣天的效果，大家想学习的话可以去看看它的代码。 </p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/14/UIViewController/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="李">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SixSixSix">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/10/14/UIViewController/" itemprop="url">UIViewController</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-14T18:24:28+08:00">
+                2018-10-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>UIViewController（视图控制器），顾名思义，是 MVC 设计模式中的控制器部分。UIViewController 在 UIKit 中主要功能是用于控制画面的切换，其中的 view 属性（UIView 类型）管理整个画面的外观。</p>
+<h2 id="UIViewController-生命周期"><a href="#UIViewController-生命周期" class="headerlink" title="UIViewController 生命周期"></a>UIViewController 生命周期</h2><p> ViewController 生命周期的第一步是初始化。不过具体调用的方法还有所不同。如果使用 StoryBoard 来创建 ViewController，我们不需要显式地去初始化，Storyboard 会自动使用 initWithCoder: 进行初始化。如果不使用 StoryBoard，我们可以使用 init: 函数进行初始化，init: 函数在实现过程中还会调用 initWithNibName:bundle:。 我们应该尽量避免在 VC 外部调用 initWithNibName:bundle:，而是把它放在 VC 的内部<a href="https://stackoverflow.com/questions/2224077/when-should-i-initialize-a-view-controller-using-initwithnibname" target="_blank" rel="noopener">（参考这里）</a>。</p>
+<p>初始化完成后，VC 的生命周期会经过下面几个函数：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">- (void)loadView</span><br><span class="line">- (void)viewDidLoad</span><br><span class="line">- (void)viewWillAppear</span><br><span class="line">- (void)viewWillLayoutSubviews</span><br><span class="line">- (void)viewDidLayoutSubviews</span><br><span class="line">- (void)viewDidAppear</span><br><span class="line">- (void)viewWillDisappear</span><br><span class="line">- (void)viewDidDisappear</span><br></pre></td></tr></table></figure></p>
+<p>假设现在有一个 AViewController(简称 Avc) 和 BViewController (简称 Bvc)，通过 navigationController 的 push 实现 Avc 到 Bvc 的跳转，下面是各个方法的执行执行顺序：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">1. A viewDidLoad  </span><br><span class="line">2. A viewWillAppear  </span><br><span class="line">3. A viewDidAppear  </span><br><span class="line">4. B viewDidLoad  </span><br><span class="line">5. A viewWillDisappear  </span><br><span class="line">6. B viewWillAppear  </span><br><span class="line">7. A viewDidDisappear  </span><br><span class="line">8. B viewDidAppear</span><br></pre></td></tr></table></figure></p>
+<p>如果再从 Bvc 跳回 Avc，会产生下面的执行顺序：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1. B viewWillDisappear  </span><br><span class="line">2. A viewWillAppear  </span><br><span class="line">3. B viewDidDisappear  </span><br><span class="line">4. A viewDidAppear</span><br></pre></td></tr></table></figure></p>
+<p>可见 viewDidLoad 只会调用一次，再第二次跳回 Avc 的时候，AViewController 仍然存在于内存中，也就不需要 load 了。</p>
+<p>注意上面的生命周期中都没有提到有关 ViewController 销毁的内容，在 iOS 4 &amp; 5 中 ViewController 中有一个 viewDidUnload 方法。当内存不足，应用收到 Memory warning 时，系统会自动调用当前没在界面上的 ViewController 的 viewDidUnload 方法。 通常情况下，这些未显示在界面上的 ViewController 是 UINavigationController Push 栈中未在栈顶的 ViewController，以及 UITabBarViewController 中未显示的子 ViewController。这些 View Controller 都会在 Memory Warning 事件发生时，被系统自动调用 viewDidUnload 方法。</p>
+<p>从 iOS 6 开始，viewDidUnload 方法被废弃掉了，应用受到 memory warning 时也不会再调用 viewDidUnload 方法。我们可以通过重载 - (void)didReceiveMemoryWarning 和 - (void)dealloc 来进行清理工作。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/14/UIView/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="李">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SixSixSix">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/10/14/UIView/" itemprop="url">UIView</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-14T17:59:10+08:00">
+                2018-10-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>UIView 表示屏幕上的一块矩形区域，负责渲染区域的内容，并且响应该区域内发生的触摸事件。它在iOS App中占有绝对重要的地位，因为iOS中几乎所有可视化控件都是 UIView 的子类。</p>
 <p>UIView 可以负责以下几种任务：</p>
 <ul>
 <li>绘制和动画</li>
-<li>布局和子视图管理</li></div><p class="readmore"><a href="/2018/10/14/UIView/">Mehr lesen</a></p></div><div class="post"><h1 class="post-title"><a href="/2018/10/14/Block-进阶/">Block 进阶</a></h1><div class="post-meta">2018-10-14</div><div class="post-content"><h2 id="使用-Block-时的注意事项"><a href="#使用-Block-时的注意事项" class="headerlink" title="使用 Block 时的注意事项"></a>使用 Block 时的注意事项</h2><p>在非 ARC 的情况下，对于 block 类型的属性应该使用 copy ，因为 block 需要维持其作用域中捕获的变量。在 ARC 中编译器会自动对 block 进行 copy 操作，因此使用 strong 或者 copy 都可以，没有什么区别，但是苹果仍然建议使用 copy 来指明编译器的行为。</p></div><p class="readmore"><a href="/2018/10/14/Block-进阶/">Mehr lesen</a></p></div><div class="post"><h1 class="post-title"><a href="/2018/10/14/Block-基础/">Block 基础</a></h1><div class="post-meta">2018-10-14</div><div class="post-content"><h2 id="Block-语法"><a href="#Block-语法" class="headerlink" title="Block 语法"></a>Block 语法</h2><p>Block 可以认为是一种匿名函数，使用如下语法声明一个 Block 类型：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">return_type (^block_name)(parameters)</span><br></pre></td></tr></table></figure></p></div><p class="readmore"><a href="/2018/10/14/Block-基础/">Mehr lesen</a></p></div><div class="post"><h1 class="post-title"><a href="/2018/10/13/Protocol-Category-和-Extension/">Protocol, Category 和 Extension</a></h1><div class="post-meta">2018-10-13</div><div class="post-content"><h2 id="Protocol"><a href="#Protocol" class="headerlink" title="Protocol"></a>Protocol</h2><p>OC是单继承的，OC中的类可以实现多个 protocol 来实现类似 C++ 中多重继承的效果。</p>
-<p>Protocol 类似 Java 中的 interface，定义了一个方法列表，这个方法列表中的方法可以使用 @required， @optional 标注，以表示该方法是否是必须要实现的方法。 一个 protocol 可以继承其他的 protocol 。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">@protocol TestProtocol &lt;NSObject&gt; // NSObject也是一个 Protocol，这里即继承 NSObject 里的方法</span><br><span class="line">- (void)print;</span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">@interface B : NSObject&lt;TestProtocol&gt;</span><br><span class="line">- (void)print; // 默认方法是 @required 的，即必须实现</span><br><span class="line">@end</span><br></pre></td></tr></table></figure></p></div><p class="readmore"><a href="/2018/10/13/Protocol-Category-和-Extension/">Mehr lesen</a></p></div><div class="post"><h1 class="post-title"><a href="/2018/10/13/变量/">变量</a></h1><div class="post-meta">2018-10-13</div><div class="post-content"><p>苹果推荐在现代 Objective-C 中使用 @property 来实现成员变量：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@interface AClass : NSObject</span><br><span class="line"></span><br><span class="line">@property (nonatomic, copy) NSString *name;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure></p></div><p class="readmore"><a href="/2018/10/13/变量/">Mehr lesen</a></p></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><form class="search-form" action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank"><input type="text" name="q" maxlength="20" placeholder="Search"/><input type="hidden" name="sitesearch" value="http://yoursite.com"/></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> Kategorien</i></div></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> Tags</i></div><div class="tagcloud"><a href="/tags/iOS/" style="font-size: 15px;">iOS</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> Letzte</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/10/31/动画/">动画</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/14/UIViewController/">UIViewController</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/14/UIView/">UIView</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/14/Block-进阶/">Block 进阶</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/14/Block-基础/">Block 基础</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/13/Protocol-Category-和-Extension/">Protocol, Category 和 Extension</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/13/变量/">变量</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> Blogroll</i></div><ul></ul><a href="http://www.example1.com/" title="site-name1" target="_blank">site-name1</a><ul></ul><a href="http://www.example2.com/" title="site-name2" target="_blank">site-name2</a><ul></ul><a href="http://www.example3.com/" title="site-name3" target="_blank">site-name3</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2018 <a href="/." rel="nofollow">SixSixSix.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/3.3.5/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/fancybox/3.3.5/jquery.fancybox.min.css"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
+<li>布局和子视图管理</li>
+<li>事件处理</li>
+</ul>
+<h2 id="绘制和动画"><a href="#绘制和动画" class="headerlink" title="绘制和动画"></a>绘制和动画</h2><h3 id="视图绘制"><a href="#视图绘制" class="headerlink" title="视图绘制"></a>视图绘制</h3><p>UIView 是按需绘制的，当整个视图或者视图的一部分由于布局变化，变成可见的，系统会要求视图进行绘制。对于那些需要使用 UIKit 或者 CoreGraphics 进行自定义绘制的视图，系统会调用drawRect:方法进行绘制。</p>
+<p>当视图内容发生变化时，需要调用setNeedsDisplay或者setNeedsDisplayInRect:方法，告诉系统该重新绘制这个视图了。调用这个方法之后，系统会在下一个绘制周期更新这个视图的内容。由于系统要等到下一个绘制周期才真正进行绘制，可以一次性对多个视图调用setNeedsDisplay，它们会同时被更新。</p>
+<h3 id="视图的几何属性"><a href="#视图的几何属性" class="headerlink" title="视图的几何属性"></a>视图的几何属性</h3><p>视图有 frame，center，bounds 等几个基本几何属性，其中:</p>
+<ul>
+<li>frame 使用的最多，其坐标位置都是相对于父视图的，可以用于确定本视图在父视图中的位置和其自身的大小</li>
+<li>center 的坐标位置也是相对于父视图的，通常用于移动，旋转等动画操作</li>
+<li>bounds 是相对于自身的，通常情况下就是（0, 0, width, height)， bounds 的含义可以认为是当前 view 被允许绘制的范围</li>
+</ul>
+<h3 id="视图的-ContentMode"><a href="#视图的-ContentMode" class="headerlink" title="视图的 ContentMode"></a>视图的 ContentMode</h3><p>视图在初次绘制完成后，系统会对绘制结果进行快照，之后尽可能地使用快照，避免重新绘制。如果视图的几何属性发生改变，系统会根据视图的 contentMode 来决定如何改变显示效果。</p>
+<p>默认的 contentMode 是 UIViewContentModeScaleToFill ，系统会拉伸当前的快照，使其符合新的 frame 尺寸。大部分 contentMode 都会对当前的快照进行拉伸或者移动等操作。如果需要重新绘制，可以把 contentMode 设置为 UIViewContentModeRedraw，强制视图在改变大小之类的操作时调用drawRect:重绘。</p>
+<h3 id="动画"><a href="#动画" class="headerlink" title="动画"></a>动画</h3><p>可以以动画的形式改变视图的下面这些属性，只需要告诉系统动画开始和结束时的数值，系统会自动处理中间的过渡过程。</p>
+<ul>
+<li>frame</li>
+<li>bounds</li>
+<li>center</li>
+<li>transform</li>
+<li>alpha</li>
+<li>backgroundColor</li>
+<li>contentStretch</li>
+</ul>
+<h2 id="布局和子视图管理"><a href="#布局和子视图管理" class="headerlink" title="布局和子视图管理"></a>布局和子视图管理</h2><p>除了提供视图本身的内容之外，一个视图也可以表现得像一个容器。当一个视图包含其他视图时，两个视图之间就创建了一个父子关系。在这个关系中子视图被称为 subView ，父视图被称为 superView 。一个视图可以包含多个子视图，它们被存放在这个视图的 subviews 数组里。添加，删除，以及操作这些子视图的相对位置的函数如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">addSubview:</span><br><span class="line">insertSubview:...</span><br><span class="line">bringSubviewToFront:</span><br><span class="line">sendSubviewToBack:</span><br><span class="line">exchangeSubviewAtIndex:withSubviewAtIndex:</span><br><span class="line">removeFromSuperview（子视图调用）</span><br></pre></td></tr></table></figure></p>
+<h3 id="AutoResizing-和-Constraint"><a href="#AutoResizing-和-Constraint" class="headerlink" title="AutoResizing 和 Constraint"></a>AutoResizing 和 Constraint</h3><p>当一个视图的大小改变时，它的子视图的位置和大小也需要相应地改变。UIView 支持自动布局，也可以手动对子视图进行布局。</p>
+<p>当下列这些事件发生时，需要进行布局操作：</p>
+<ul>
+<li>视图的 bounds 大小改变</li>
+<li>用户界面旋转，通常会导致根视图控制器的大小改变</li>
+<li>视图的 layer 层的 Core Animation sublayers 发生改变</li>
+<li>程序调用视图的setNeedsLayout或layoutIfNeeded方法</li>
+<li>程序调用视图 layer 的setNeedsLayout方法 </li>
+</ul>
+<h4 id="Auto-Resizing"><a href="#Auto-Resizing" class="headerlink" title="Auto Resizing"></a>Auto Resizing</h4><p>视图的autoresizesSubviews属性决定了在视图大小发生变化时，如何自动调节子视图。</p>
+<p>可以使用的代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">UIViewAutoresizingNone</span><br><span class="line">UIViewAutoresizingFlexibleHeight</span><br><span class="line">UIViewAutoresizingFlexibleWidth</span><br><span class="line">UIViewAutoresizingFlexibleLeftMargin</span><br><span class="line">UIViewAutoresizingFlexibleRightMargin</span><br><span class="line">UIViewAutoresizingFlexibleBottomMargin</span><br><span class="line">UIViewAutoresizingFlexibleTopMargin</span><br><span class="line">可以通过位运算符将它们组合起来，例如UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth。</span><br></pre></td></tr></table></figure></p>
+<h4 id="Constraint"><a href="#Constraint" class="headerlink" title="Constraint"></a>Constraint</h4><p>Constraint 是另一种用于自动布局的方法。本质上，Constraint 就是对 UIView 之间两个属性的一个约束：</p>
+<p>attribute1 == multiplier × attribute2 + constant<br>其中方程两边不一定是等于关系，也可以是大于等于之类的关系。</p>
+<h4 id="自定义-layout"><a href="#自定义-layout" class="headerlink" title="自定义 layout"></a>自定义 layout</h4><p>UIView 当中提供了一个 layoutSubviews 函数，UIView 的子类可以重载这个函数，以实现更加复杂和精细的子 View 布局。</p>
+<p>苹果文档专门强调了，应该只在上面提到的 Autoresizing 和 Constraint 机制不能实现所需要的效果时，才使用 layoutSubviews。而且，layoutSubviews 方法只能被系统触发调用，程序员不能手动直接调用该方法。</p>
+<p> layoutSubviews 方法调用具体有下面几种情况：</p>
+<ol>
+<li>在父 view 的 autoresize mask 为 ON 的情况下，addSubview 会导致被 add 的 view 调用 layoutSubviews, 同时 add 的 target view 以及它所有的子 view 都会被调用。</li>
+<li>setFrame 当新的 frame 和 旧的不同时（即 view 的大小改变时）会调用 layoutSubviews</li>
+<li>滚动一个 UIScollView 会导致这个 scrollView 以及它的父 View 调用 layoutSubviews</li>
+<li>旋转设备会导致当前所响应的 ViewController 的主 View 调用 layoutSubviews</li>
+<li>改变 View 的 size 会导致父 View 调用 layoutSubviews</li>
+<li>removeFromSuperview 也会导致父 View 调用 layoutSubviews</li>
+</ol>
+<h2 id="事件处理"><a href="#事件处理" class="headerlink" title="事件处理"></a>事件处理</h2><p>UIView 是 UIResponder 的子类，可以响应触控事件。</p>
+<p>通常可以使用addGestureRecognizer:添加手势识别器来响应触控事件，如果需要手动处理，则按需要重载 UIView 中的下面四个函数：</p>
+<ul>
+<li>touchesBegan:withEvent:</li>
+<li>touchesMoved:withEvent:</li>
+<li>touchesEnded:withEvent:</li>
+<li>touchesCancelled:withEvent:</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/14/Block-进阶/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="李">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SixSixSix">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/10/14/Block-进阶/" itemprop="url">Block 进阶</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-14T17:33:45+08:00">
+                2018-10-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="使用-Block-时的注意事项"><a href="#使用-Block-时的注意事项" class="headerlink" title="使用 Block 时的注意事项"></a>使用 Block 时的注意事项</h2><p>在非 ARC 的情况下，对于 block 类型的属性应该使用 copy ，因为 block 需要维持其作用域中捕获的变量。在 ARC 中编译器会自动对 block 进行 copy 操作，因此使用 strong 或者 copy 都可以，没有什么区别，但是苹果仍然建议使用 copy 来指明编译器的行为。</p>
+<p>block 在捕获外部变量的时候，会保持一个强引用，当在 block 中捕获 self 时，由于对象会对 block 进行 copy，于是便形成了强引用循环：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">@interface XYZBlockKeeper : NSObject</span><br><span class="line">@property (copy) void (^block)(void);</span><br><span class="line">@end</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">@implementation XYZBlockKeeper</span><br><span class="line">- (void)configureBlock &#123;</span><br><span class="line">    self.block = ^&#123;</span><br><span class="line">        [self doSomething];  </span><br><span class="line">                               </span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<p>为了避免强引用循环，最好捕获一个 self 的弱引用：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">- (void)configureBlock &#123;</span><br><span class="line">    XYZBlockKeeper * __weak weakSelf = self;</span><br><span class="line">    self.block = ^&#123;</span><br><span class="line">        [weakSelf doSomething];   </span><br><span class="line">                                  </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>使用弱引用会带来另一个问题，weakSelf 有可能会为 nil，如果多次调用 weakSelf 的方法，有可能在 block 执行过程中 weakSelf 变为 nil。因此需要在 block 中将 weakSelf “强化”<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">__weak typeof(self) weakSelf = self;</span><br><span class="line">NSBlockOperation *op = [[NSBlockOperation alloc] init];</span><br><span class="line">[op addExecutionBlock:^ &#123;</span><br><span class="line">    __strong typeof(self) strongSelf = weakSelf;</span><br><span class="line">    [strongSelf doSomething];</span><br><span class="line">    [strongSelf doMoreThing];</span><br><span class="line">&#125;];</span><br><span class="line">[someOperationQueue addOperation:op];</span><br></pre></td></tr></table></figure></p>
+<p>doSomething 和 doMoreThing 要么全执行成功，要么全失败，不会出现一个成功一个失败，即执行到中间 self 变成 nil 的情况。</p>
+<h2 id="Block-在堆上还是在栈上？"><a href="#Block-在堆上还是在栈上？" class="headerlink" title="Block 在堆上还是在栈上？"></a>Block 在堆上还是在栈上？</h2><p>首先要指出，Block 在非 ARC 和 ARC 两种环境下的内存机制差别很大。</p>
+<p>在 MRC 下，Block 默认是分配在栈上的，除非进行显式的 copy：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">__block int val = 10;</span><br><span class="line">blk stackBlock = ^&#123;</span><br><span class="line">    NSLog(@&quot;val = %d&quot;, val++);</span><br><span class="line">&#125;;</span><br><span class="line">NSLog(@&quot;stackBlock: %@&quot;, stackBlock); // stackBlock: &lt;__NSStackBlock__: 0xbfffdb28&gt;</span><br><span class="line"></span><br><span class="line">tempBlock = [stackBlock copy];</span><br><span class="line">NSLog(@&quot;tempBlock: %@&quot;, tempBlock);  // tempBlock: &lt;__NSMallocBlock__: 0x756bf20&gt;</span><br></pre></td></tr></table></figure></p>
+<p>想把 Block 用作返回值的时候，也要加入 copy 和 autorelease：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">- (blk)myTestBlock &#123;</span><br><span class="line">    __block int val = 10;</span><br><span class="line">    blk stackBlock = ^&#123;</span><br><span class="line">        NSLog(@&quot;val = %d&quot;, val++);</span><br><span class="line">    &#125;;</span><br><span class="line">    return [[stackBlock copy] autorelease];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>在 ARC 环境下，Block 使用简化了很多，同时 ARC 也更加倾向于把 Block 放到堆上：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">__block int val = 10;</span><br><span class="line">__strong blk strongPointerBlock = ^&#123;</span><br><span class="line">    NSLog(@&quot;val = %d&quot;, val++);</span><br><span class="line">&#125;;</span><br><span class="line">NSLog(@&quot;strongPointerBlock: %@&quot;, strongPointerBlock); // strongPointerBlock: &lt;__NSMallocBlock__: 0x7625120&gt;</span><br><span class="line"></span><br><span class="line">__weak blk weakPointerBlock = ^&#123;</span><br><span class="line">    NSLog(@&quot;val = %d&quot;, val++);</span><br><span class="line">&#125;;</span><br><span class="line">NSLog(@&quot;weakPointerBlock: %@&quot;, weakPointerBlock); // weakPointerBlock: &lt;__NSStackBlock__: 0xbfffdb30&gt;</span><br><span class="line"></span><br><span class="line">NSLog(@&quot;mallocBlock: %@&quot;, [weakPointerBlock copy]); // mallocBlock: &lt;__NSMallocBlock__: 0x714ce60&gt;</span><br><span class="line"></span><br><span class="line">NSLog(@&quot;test %@&quot;, ^&#123;NSLog(@&quot;val = %d&quot;, val++);&#125;); // test &lt;__NSStackBlock__: 0xbfffdb18&gt;</span><br></pre></td></tr></table></figure></p>
+<p>可以看到只有显式的 <strong>weak 以及纯匿名 Block 是放到栈上的，赋值给 </strong>strong 指针（也就是默认赋值）都会导致在堆上创建 Block。</p>
+<p>对于把 Block 作为函数返回值的情况，ARC 也能自动处理：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">- (__unsafe_unretained blk) blockTest &#123;</span><br><span class="line">    int val = 11;</span><br><span class="line">    return ^&#123;NSLog(@&quot;val = %d&quot;, val);&#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">NSLog(@&quot;block return from function: %@&quot;, [self blockTest]); // block return from function: &lt;__NSMallocBlock__: 0x7685640&gt;</span><br></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/14/Block-基础/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="李">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SixSixSix">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/10/14/Block-基础/" itemprop="url">Block 基础</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-14T17:19:04+08:00">
+                2018-10-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="Block-语法"><a href="#Block-语法" class="headerlink" title="Block 语法"></a>Block 语法</h2><p>Block 可以认为是一种匿名函数，使用如下语法声明一个 Block 类型：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">return_type (^block_name)(parameters)</span><br></pre></td></tr></table></figure></p>
+<p>例如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">double (^multiplyTwoValues)(double, double);</span><br></pre></td></tr></table></figure></p>
+<p>Block 字面值的写法如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">^ (double firstValue, double secondValue) &#123;</span><br><span class="line">    return firstValue * secondValue;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>上面的写法省略了返回值的类型，也可以显式地指出返回值类型。</p>
+<p>声明并且定义完一个Block之后，便可以像使用函数一样使用它：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">double (^multiplyTwoValues)(double, double) =</span><br><span class="line">                          ^(double firstValue, double secondValue) &#123;            </span><br><span class="line">                              return firstValue * secondValue;</span><br><span class="line">                          &#125;;</span><br><span class="line">double result = multiplyTwoValues(2,4);</span><br><span class="line"></span><br><span class="line">NSLog(@&quot;The result is %f&quot;, result);</span><br></pre></td></tr></table></figure></p>
+<p>同时，Block 也是一种 Objective-C 对象，可以用于赋值，当做参数传递，也可以放入 NSArray 和 NSDictionary 中。</p>
+<p>注意：当用于函数参数时，Block 应该放在参数列表的最后一个。</p>
+<p>由于 Block 的语法是如此的晦涩难记，以至于出现了 <a href="http://fuckingblocksyntax.com" target="_blank" rel="noopener">fuckingblocksyntax</a> 这样的网站专门用于记录 block 的语法，翻译并摘录如下：</p>
+<p>作为变量:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">returnType (^blockName)(parameterTypes) = ^returnType(parameters) &#123;...&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>作为属性:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@property (nonatomic, copy) returnType (^blockName)(parameterTypes);</span><br></pre></td></tr></table></figure></p>
+<p>作为函数声明中的参数:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">- (void)someMethodThatTakesABlock:(returnType (^)(parameterTypes))blockName;</span><br></pre></td></tr></table></figure></p>
+<p>作为函数调用中的参数:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[someObject someMethodThatTakesABlock:^returnType (parameters) &#123;...&#125;];</span><br></pre></td></tr></table></figure></p>
+<p>作为 typedef:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">typedef returnType (^TypeName)(parameterTypes);</span><br><span class="line">TypeName blockName = ^returnType(parameters) &#123;...&#125;;</span><br></pre></td></tr></table></figure></p>
+<h2 id="Block-可以捕获外部变量"><a href="#Block-可以捕获外部变量" class="headerlink" title="Block 可以捕获外部变量"></a>Block 可以捕获外部变量</h2><p>Block 可以捕获来自外部作用域的变量，这是Block一个很强大的特性。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">- (void)testMethod &#123;</span><br><span class="line">    int anInteger = 42;</span><br><span class="line">    void (^testBlock)(void) = ^&#123;</span><br><span class="line">        NSLog(@&quot;Integer is: %i&quot;, anInteger);</span><br><span class="line">    &#125;;</span><br><span class="line">    testBlock();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>默认情况下，Block 中捕获的到变量是不能修改的，如果想修改，需要使用__block来声明：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">__block int anInteger = 42;</span><br></pre></td></tr></table></figure></p>
+<p>对于 id 类型的变量，在 MRC 情况下，使用 <strong>block id x 不会 retain 变量，而在 ARC 情况下则会对变量进行 retain（即和其他捕获的变量相同）。如果不想在 block 中进行 retain 可以使用 </strong>unsafe_unretained <strong>block id x，不过这样可能会导致野指针出现。更好的办法是使用 </strong>weak 的临时变量：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">MyViewController *myController = [[MyViewController alloc] init];</span><br><span class="line"></span><br><span class="line">MyViewController * __weak weakMyViewController = myController;</span><br><span class="line">myController.completionHandler =  ^(NSInteger result) &#123;</span><br><span class="line">    [weakMyViewController dismissViewControllerAnimated:YES completion:nil];</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>或者把使用 __block 修饰的变量设为 nil，以打破引用循环：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">MyViewController * __block myController = [[MyViewController alloc] init];</span><br><span class="line"></span><br><span class="line">myController.completionHandler =  ^(NSInteger result) &#123;</span><br><span class="line">    [myController dismissViewControllerAnimated:YES completion:nil];</span><br><span class="line">    myController = nil;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/13/Protocol-Category-和-Extension/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="李">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SixSixSix">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/10/13/Protocol-Category-和-Extension/" itemprop="url">Protocol, Category 和 Extension</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-13T17:57:18+08:00">
+                2018-10-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="Protocol"><a href="#Protocol" class="headerlink" title="Protocol"></a>Protocol</h2><p>OC是单继承的，OC中的类可以实现多个 protocol 来实现类似 C++ 中多重继承的效果。</p>
+<p>Protocol 类似 Java 中的 interface，定义了一个方法列表，这个方法列表中的方法可以使用 @required， @optional 标注，以表示该方法是否是必须要实现的方法。 一个 protocol 可以继承其他的 protocol 。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">@protocol TestProtocol &lt;NSObject&gt; // NSObject也是一个 Protocol，这里即继承 NSObject 里的方法</span><br><span class="line">- (void)print;</span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">@interface B : NSObject&lt;TestProtocol&gt;</span><br><span class="line">- (void)print; // 默认方法是 @required 的，即必须实现</span><br><span class="line">@end</span><br></pre></td></tr></table></figure></p>
+<p>Delegate（委托）是 Cocoa 中常见的一种设计模式，其实现依赖于 protocol 这个语言特性。</p>
+<h2 id="含有-property-的-Protocol"><a href="#含有-property-的-Protocol" class="headerlink" title="含有 property 的 Protocol"></a>含有 property 的 Protocol</h2><p>当 Protocol 中含有 property 时，编译器是不会进行自动 synthesize 的，需要手动处理：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">@class ExampleClass;</span><br><span class="line"></span><br><span class="line">@protocol ExampleProtocol</span><br><span class="line"></span><br><span class="line">@required</span><br><span class="line"></span><br><span class="line">@property (nonatomic, retain) ExampleClass *item;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure></p>
+<p>在实现这个 Protocol 的时候，要么再次声明 property：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@interface MyObject : NSObject &lt;ExampleProtocol&gt;</span><br><span class="line"></span><br><span class="line">@property (nonatomic, retain) ExampleClass *item;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure></p>
+<p>要么进行手动 synthesize：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">@interface MyObject : NSObject &lt;ExampleProtocol&gt;</span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">@implementation MyObject</span><br><span class="line">@synthesize item;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure></p>
+<p>工程自带的 AppDelegate 使用了前一种方法，UIApplicationDelegate protocol 当中定义了 window 属性：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@property (nonatomic, retain) UIWindow *window NS_AVAILABLE_IOS(5_0);</span><br></pre></td></tr></table></figure></p>
+<p>在 AppDelegate.h 中我们可以看到再次对 windows 进行了声明：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@interface AppDelegate : UIResponder &lt;UIApplicationDelegate&gt;</span><br><span class="line"></span><br><span class="line">@property (nonatomic, strong) UIWindow *window;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure></p>
+<h2 id="Category"><a href="#Category" class="headerlink" title="Category"></a>Category</h2><p>Category 是一种很灵活的扩展原有类的机制，使用 Category 不需要访问原有类的代码，也无需继承。Category提供了一种简单的方式，来实现类的相关方法的模块化，把不同的类方法分配到不同的类文件中。</p>
+<p>Category 常见的使用方法如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">// SomeClass.h</span><br><span class="line">@interface SomeClass : NSObject &#123;</span><br><span class="line">&#125;</span><br><span class="line">- (void)print;</span><br><span class="line">@end </span><br><span class="line"></span><br><span class="line">// SomeClass+Hello.h</span><br><span class="line">#import &quot;SomeClass.h&quot;</span><br><span class="line"></span><br><span class="line">@interface SomeClass (Hello)</span><br><span class="line">- (void)hello;</span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">// 实现</span><br><span class="line">#import &quot;SomeClass+Hello.h</span><br><span class="line"></span><br><span class="line">@implementationSomeClass (Hello)</span><br><span class="line">-(void)hello &#123;</span><br><span class="line">    NSLog(@&quot;Hello World!&quot;);</span><br><span class="line">&#125;</span><br><span class="line">@end</span><br></pre></td></tr></table></figure></p>
+<p>在使用 Category 时需要注意的一点是，如果有多个命名 Category 均实现了同一个方法（即出现了命名冲突），那么这些方法在运行时只有一个会被调用，具体哪个会被调用是不确定的。因此在给已有的类（特别是 Cocoa 类）添加 Category 时，需要注意命名。</p>
+<h2 id="Extension"><a href="#Extension" class="headerlink" title="Extension"></a>Extension</h2><p>Extension 可以认为是一种匿名的 Category， Extension 与 Category 有如下几点显著的区别：</p>
+<ol>
+<li>使用 Extension 必须有原有类的源码</li>
+<li>Extension 声明的方法必须在类的主 @implementation 区间内实现，可以避免使用有名 Category 带来的多个不必要的 implementation 段。</li>
+<li>Extension 可以在类中添加新的属性和实例变量，Category 不可以(<strong>在 Category 中实际上可以通过运行时添加新的属性</strong>)<br><strong>注：现代 ObjC 中 Extension 和 Category 中声明的方法如果没有实现编译器都会给出警告。</strong></li>
+</ol>
+<p>下面是一个 Extension 的例子：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">@interface MyClass : NSObject  </span><br><span class="line">- (float)value;  </span><br><span class="line">@end  </span><br><span class="line"></span><br><span class="line">@interface MyClass () &#123; // 注意此处扩展的写法  </span><br><span class="line">    float value;  </span><br><span class="line">&#125;  </span><br><span class="line">- (void)setValue:(float)newValue;  </span><br><span class="line">@end  </span><br><span class="line"></span><br><span class="line">@implementation MyClass  </span><br><span class="line"></span><br><span class="line">- (float)value &#123;  </span><br><span class="line">    return value;  </span><br><span class="line">&#125;  </span><br><span class="line"></span><br><span class="line">- (void)setValue:(float)newValue &#123;  </span><br><span class="line">    value = newValue;  </span><br><span class="line">&#125;  </span><br><span class="line">@end</span><br></pre></td></tr></table></figure></p>
+<p>Extension 很常见的用法，是用来给类添加私有的变量和方法，用于在类的内部使用。例如在 interface 中定义为 readonly 类型的属性，在实现中添加 extension，将其重新定义为 readwrite，这样我们在类的内部就可以直接修改它的值，然而外部依然不能调用 setter 方法来修改。示例代码如下（<a href="https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/CustomizingExistingClasses/CustomizingExistingClasses.html#//apple_ref/doc/uid/TP40011210-CH6-SW3" target="_blank" rel="noopener">来自苹果官方文档</a>）: </p>
+<p>XYZPerson.h<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@interface XYZPerson : NSObject</span><br><span class="line">...</span><br><span class="line">@property (readonly) NSString *uniqueIdentifier;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure></p>
+<p>XYZPerson.m<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">@interface XYZPerson ()</span><br><span class="line">@property (readwrite) NSString *uniqueIdentifier;</span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">@implementation XYZPerson</span><br><span class="line">...</span><br><span class="line">@end</span><br></pre></td></tr></table></figure></p>
+<h2 id="如何给已有的类添加属性"><a href="#如何给已有的类添加属性" class="headerlink" title="如何给已有的类添加属性"></a>如何给已有的类添加属性</h2><p>首先强调一下上面例子中所展示的，Extension 可以给类添加属性，编译器会自动生成 getter，setter 和 ivar。 Category 并不支持这些。如果使用 Category 的话，类似下面这样：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">@interface XYZPerson (UDID)</span><br><span class="line">@property (readwrite) NSString *uniqueIdentifier;</span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">@implementation XYZPerson (UDID)</span><br><span class="line">...</span><br><span class="line">@end</span><br></pre></td></tr></table></figure></p>
+<p>尽管编译可以通过，但是当真正使用 uniqueIdentifier 时直接会导致程序崩溃。</p>
+<p>如果我们手动去 synthesize 呢？像下面这样：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@implementation XYZPerson (UDID)</span><br><span class="line">@synthesize uniqueIdentifier;</span><br><span class="line">...</span><br><span class="line">@end</span><br></pre></td></tr></table></figure></p>
+<p>然而这样做的话，代码直接报编译错误了：</p>
+<p>@synthesize not allowed in a category’s implementation</p>
+<p>看来这条路是彻底走不通了。</p>
+<p>不过我们还有别的方法，想通过 Category 添加属性的话，可以通过 Runtime 当中提供的 associated object 特性。NSHipster 的 <a href="https://nshipster.cn/associated-objects/" target="_blank" rel="noopener">这篇文章</a> 展示了具体的做法。</p>
+<h2 id="如何在类中添加全局变量"><a href="#如何在类中添加全局变量" class="headerlink" title="如何在类中添加全局变量"></a>如何在类中添加全局变量</h2><p>有些时候我们需要在类中添加某个在类中全局可用的变量，为了避免污染作用域，一个比较好的做法是在 .m 文件中使用 static 变量：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">static NSOperationQueue * _personOperationQueue = nil;</span><br><span class="line"></span><br><span class="line">@implementation XYZPerson</span><br><span class="line">...</span><br><span class="line">@end</span><br></pre></td></tr></table></figure></p>
+<p>由于 static 变量在编译期就是确定的，因此对于 NSObject 对象来说，初始化的值只能是 nil。如何进行类似 init 的初始化呢？可以通过重载 initialize 方法来做：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">@implementation XYZPerson</span><br><span class="line">- (void)initialize &#123;</span><br><span class="line">    if (!_personOperationQueue) &#123;</span><br><span class="line">        _personOperationQueue = [[NSOperationQueue alloc] init];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">@end</span><br></pre></td></tr></table></figure></p>
+<p>为什么这里要判断是否为 nil 呢？因为 initialize 方法可能会调用多次。</p>
+<p>如果是在 Category 中想声明全局变量呢？当然也可以通过 initialize，不过除非必须的情况下，并不推荐在 Category 当中进行方法重载。</p>
+<p>有一种方法是声明 static 函数，下面的代码来自 <a href="https://github.com/AFNetworking/AFNetworking/blob/master/AFNetworking/AFURLSessionManager.m" target="_blank" rel="noopener">AFNetworking</a>，声明了一个当前文件范围可用的队列：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">static dispatch_queue_t url_session_manager_creation_queue() &#123;</span><br><span class="line">    static dispatch_queue_t af_url_session_manager_creation_queue;</span><br><span class="line">    static dispatch_once_t onceToken;</span><br><span class="line">    dispatch_once(&amp;onceToken, ^&#123;</span><br><span class="line">        af_url_session_manager_creation_queue = dispatch_queue_create(&quot;com.alamofire.networking.session.manager.creation&quot;, DISPATCH_QUEUE_SERIAL);</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    return af_url_session_manager_creation_queue;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>下面介绍一个有点黑魔法的方法，除了上面两种方法之外，我们还可以通过编译器的 <code>&lt;__attribute__&gt;</code> 特性来实现初始化：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">__attribute__((constructor))</span><br><span class="line">static void initialize_Queue() &#123;</span><br><span class="line">    _personOperationQueue = [[NSOperationQueue alloc] init];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@implementation XYZPerson (Operation)</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/13/变量/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="李">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SixSixSix">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/10/13/变量/" itemprop="url">变量</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-13T17:06:56+08:00">
+                2018-10-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>苹果推荐在现代 Objective-C 中使用 @property 来实现成员变量：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@interface AClass : NSObject</span><br><span class="line"></span><br><span class="line">@property (nonatomic, copy) NSString *name;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure></p>
+<p>使用 @property 声明的变量可以使用 实例名.变量名 来获取和修改。</p>
+<p>@property 可以看做是一种语法糖，在 MRC 下，使用 @property 可以看成实现了下面的代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">// AClass.h</span><br><span class="line">@interface AClass : NSObject &#123;  </span><br><span class="line">@public</span><br><span class="line">    NSString *_name;    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (NSString*)name;</span><br><span class="line">- (void)setName:(NSString *)newName;</span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">// AClass.m</span><br><span class="line">@implementation AClass</span><br><span class="line">- (NSString*)name &#123;  </span><br><span class="line">    return _name;   </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)setName:(NSString *)name &#123;   </span><br><span class="line">    if (_name != name) &#123;    </span><br><span class="line">        [_name release];    </span><br><span class="line">        _name = [name copy];    </span><br><span class="line">    &#125;   </span><br><span class="line">&#125;   </span><br><span class="line">@end</span><br></pre></td></tr></table></figure></p>
+<p>也就是说，@property 会自动生成 getter 和 setter， 同时进行自动内存管理。</p>
+<p>@property 的属性可以有以下几种：</p>
+<p>readwrite 是可读可写特性；需要生成 getter 方法和 setter 方法<br>readonly 是只读特性，只会生成 getter 方法 不会生成 setter 方法，不希望属性在类外改变时使用<br>assign 是赋值特性，setter 方法将传入参数赋值给实例变量；仅设置变量时；<br>retain 表示持有特性，setter 方法将传入参数先保留，再赋值，传入参数的 retain count 会+1;<br>copy 表示拷贝特性，setter 方法将传入对象复制一份；需要完全一份新的变量时。<br>nonatomic 和 atomic ，决定编译器生成的 setter getter是否是原子操作。<br>atomic 表示使用原子操作，可以在一定程度上保证线程安全。一般推荐使用 nonatomic ，因为 nonatomic 编译出的代码更快<br>默认的 @property 是 readwrite，assign，atomic。</p>
+<p>同时，我们还可以使用自己定义 accessor 的名字：<br>@property (getter=isFinished) BOOL finished;<br>这种情况下，编译器生成的 getter 方法名为 isFinished，而不是 finished。</p>
+<p>对于现代 OC 来说，在使用 @property 时， 编译器默认会进行自动 synthesize，生成 getter 和 setter，同时把 ivar 和属性绑定起来：</p>
+<p>现代 OC 不再需要手动进行下面的声明，编译器会自动处理<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@synthesize propertyName = _propertyName</span><br></pre></td></tr></table></figure></p>
+<p>不需要我们写任何代码，就可以直接使用 getter 和 setter 了。</p>
+<p>然而并不是所有情况下编译器都会进行自动 synthesize，具体由下面几种：</p>
+<p>可读写(readwrite)属性实现了自己的 getter 和 setter<br>只读(readonly)属性实现了自己的 getter</p>
+<p>使用 @dynamic，显式表示不希望编译器生成 getter 和 setter<br>protocol 中定义的属性，编译器不会自动 synthesize，需要手动写<br>当重载父类中的属性时，也必须手动写 synthesize</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+  </section>
+
+  
+
+
+          </div>
+          
+
+
+          
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">李</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">李</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
