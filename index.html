@@ -95,7 +95,7 @@
 				        
 							<li><a href="/archives">所有文章</a></li>
 				        
-							<li><a href="/tags/随笔">随笔</a></li>
+							<li><a href="/archives">归档</a></li>
 				        
 						</ul>
 					</nav>
@@ -152,7 +152,7 @@
 		        
 					<li><a href="/archives">所有文章</a></li>
 		        
-					<li><a href="/tags/随笔">随笔</a></li>
+					<li><a href="/archives">归档</a></li>
 		        
 		        <div class="clearfix"></div>
 				</ul>
@@ -726,7 +726,7 @@
 <p>为什么这里要判断是否为 nil 呢？因为 initialize 方法可能会调用多次。</p>
 <p>如果是在 Category 中想声明全局变量呢？当然也可以通过 initialize，不过除非必须的情况下，并不推荐在 Category 当中进行方法重载。</p>
 <p>有一种方法是声明 static 函数，下面的代码来自 <a href="https://github.com/AFNetworking/AFNetworking/blob/master/AFNetworking/AFURLSessionManager.m" target="_blank" rel="noopener">AFNetworking</a>，声明了一个当前文件范围可用的队列：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">static dispatch_queue_t url_session_manager_creation_queue() &#123;</span><br><span class="line">    static dispatch_queue_t af_url_session_manager_creation_queue;</span><br><span class="line">    static dispatch_once_t onceToken;</span><br><span class="line">    dispatch_once(&amp;onceToken, ^&#123;</span><br><span class="line">        af_url_session_manager_creation_queue = dispatch_queue_create(&quot;com.alamofire.networking.session.manager.creation&quot;, DISPATCH_QUEUE_SERIAL);</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    return af_url_session_manager_creation_queue;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>下面介绍一个有点黑魔法的方法，除了上面两种方法之外，我们还可以通过编译器的 <figure class="highlight plain"><figcaption><span>特性来实现初始化：</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">```</span><br><span class="line">__attribute__((constructor))</span><br><span class="line">static void initialize_Queue() &#123;</span><br><span class="line">    _personOperationQueue = [[NSOperationQueue alloc] init];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@implementation XYZPerson (Operation)</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure></p>
+<p>下面介绍一个有点黑魔法的方法，除了上面两种方法之外，我们还可以通过编译器的 <strong>attribute</strong> 特性来实现初始化：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">__attribute__((constructor))</span><br><span class="line">static void initialize_Queue() &#123;</span><br><span class="line">    _personOperationQueue = [[NSOperationQueue alloc] init];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@implementation XYZPerson (Operation)</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure></p>
 
       
     </div>
