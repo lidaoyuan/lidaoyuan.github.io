@@ -434,7 +434,7 @@
       
         
           <h2 id="UIView-Animation"><a href="#UIView-Animation" class="headerlink" title="UIView Animation"></a>UIView Animation</h2><h3 id="简单动画"><a href="#简单动画" class="headerlink" title="简单动画"></a>简单动画</h3><p>对于 UIView 上简单的动画，iOS 提供了很方便的函数：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">+ animateWithDuration:animations:</span><br></pre></td></tr></table></figure>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">+ animateWithDuration:animations:</span><br></pre></td></tr></table></figure>
 <p>第一个参数是动画的持续时间，第二个参数是一个 block，在 animations block 中对 UIView 的属性进行调整，设置 UIView 动画结束后最终的效果，iOS 就会自动补充中间帧，形成动画。<br>
           <!--noindex-->
           <div class="post-button text-center">
@@ -941,9 +941,9 @@
 
       
         
-          <h2 id="Block-语法"><a href="#Block-语法" class="headerlink" title="Block 语法"></a>Block 语法</h2><p>Block 可以认为是一种匿名函数，使用如下语法声明一个 Block 类型：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">return_type (^block_name)(parameters)</span><br></pre></td></tr></table></figure></p>
-<p>例如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">double (^multiplyTwoValues)(double, double);</span><br></pre></td></tr></table></figure></p>
-<p>Block 字面值的写法如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">^ (double firstValue, double secondValue) &#123;</span><br><span class="line">    return firstValue * secondValue;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+          <h2 id="Block-语法"><a href="#Block-语法" class="headerlink" title="Block 语法"></a>Block 语法</h2><p>Block 可以认为是一种匿名函数，使用如下语法声明一个 Block 类型：<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">return_type (^block_name)(parameters)</span><br></pre></td></tr></table></figure></p>
+<p>例如：<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">double</span> (^multiplyTwoValues)(<span class="keyword">double</span>, <span class="keyword">double</span>);</span><br></pre></td></tr></table></figure></p>
+<p>Block 字面值的写法如下：<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">^ (<span class="keyword">double</span> firstValue, <span class="keyword">double</span> secondValue) &#123;</span><br><span class="line">    <span class="keyword">return</span> firstValue * secondValue;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>上面的写法省略了返回值的类型，也可以显式地指出返回值类型。<br>
           <!--noindex-->
           <div class="post-button text-center">
@@ -1069,7 +1069,7 @@
       
         
           <h2 id="Protocol"><a href="#Protocol" class="headerlink" title="Protocol"></a>Protocol</h2><p>OC是单继承的，OC中的类可以实现多个 protocol 来实现类似 C++ 中多重继承的效果。</p>
-<p>Protocol 类似 Java 中的 interface，定义了一个方法列表，这个方法列表中的方法可以使用 @required， @optional 标注，以表示该方法是否是必须要实现的方法。 一个 protocol 可以继承其他的 protocol 。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">@protocol TestProtocol &lt;NSObject&gt; // NSObject也是一个 Protocol，这里即继承 NSObject 里的方法</span><br><span class="line">- (void)print;</span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">@interface B : NSObject&lt;TestProtocol&gt;</span><br><span class="line">- (void)print; // 默认方法是 @required 的，即必须实现</span><br><span class="line">@end</span><br></pre></td></tr></table></figure></p>
+<p>Protocol 类似 Java 中的 interface，定义了一个方法列表，这个方法列表中的方法可以使用 @required， @optional 标注，以表示该方法是否是必须要实现的方法。 一个 protocol 可以继承其他的 protocol 。<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">@protocol</span> <span class="title">TestProtocol</span> &lt;<span class="title">NSObject</span>&gt; // <span class="title">NSObject</span>也是一个 <span class="title">Protocol</span>，这里即继承 <span class="title">NSObject</span> 里的方法</span></span><br><span class="line">- (<span class="keyword">void</span>)print;</span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">B</span> : <span class="title">NSObject</span>&lt;<span class="title">TestProtocol</span>&gt;</span></span><br><span class="line">- (<span class="keyword">void</span>)print; <span class="comment">// 默认方法是 @required 的，即必须实现</span></span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure></p>
 <p>Delegate（委托）是 Cocoa 中常见的一种设计模式，其实现依赖于 protocol 这个语言特性。<br>
           <!--noindex-->
           <div class="post-button text-center">
@@ -1194,7 +1194,7 @@
 
       
         
-          <p>苹果推荐在现代 Objective-C 中使用 @property 来实现成员变量：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@interface AClass : NSObject</span><br><span class="line"></span><br><span class="line">@property (nonatomic, copy) NSString *name;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure></p>
+          <p>苹果推荐在现代 Objective-C 中使用 @property 来实现成员变量：<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">AClass</span> : <span class="title">NSObject</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">copy</span>) <span class="built_in">NSString</span> *name;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure></p>
 <p>使用 @property 声明的变量可以使用 实例名.变量名 来获取和修改。</p>
 <p>@property 可以看做是一种语法糖，在 MRC 下，使用 @property 可以看成实现了下面的代码：<br>
           <!--noindex-->
