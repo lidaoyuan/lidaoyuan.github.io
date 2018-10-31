@@ -1,335 +1,68 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  
-  <title>Block 基础 | SixSixSix</title>
+extends base
 
-  <!-- keywords -->
-  
+block title
+  title= page.title + ' | ' + config.title
 
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Block 语法Block 可以认为是一种匿名函数，使用如下语法声明一个 Block 类型：1return_type (^block_name)(parameters) 例如：1double (^multiplyTwoValues)(double, double); Block 字面值的写法如下：123^ (double firstValue, double secondValue) &amp;#123;">
-<meta name="keywords" content="iOS">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Block 基础">
-<meta property="og:url" content="http://yoursite.com/2018/10/14/Block-基础/index.html">
-<meta property="og:site_name" content="SixSixSix">
-<meta property="og:description" content="Block 语法Block 可以认为是一种匿名函数，使用如下语法声明一个 Block 类型：1return_type (^block_name)(parameters) 例如：1double (^multiplyTwoValues)(double, double); Block 字面值的写法如下：123^ (double firstValue, double secondValue) &amp;#123;">
-<meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-10-14T09:29:58.362Z">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Block 基础">
-<meta name="twitter:description" content="Block 语法Block 可以认为是一种匿名函数，使用如下语法声明一个 Block 类型：1return_type (^block_name)(parameters) 例如：1double (^multiplyTwoValues)(double, double); Block 字面值的写法如下：123^ (double firstValue, double secondValue) &amp;#123;">
-  
-    <link rel="alternative" href="/atom.xml" title="SixSixSix" type="application/atom+xml">
-  
-  
-    <link rel="icon" href="http://7xkj1z.com1.z0.glb.clouddn.com/head.jpg">
-  
-  <link rel="stylesheet" href="/css/style.css">
-  
-  
+block content
+  .post
+    h1.post-title= page.title
+    .post-meta= page.date.format('ll')
+      if page.categories.length > 0
+        span= ' | '
+        span.category
+          for category in page.categories.toArray()
+            a(href=url_for(category.path))= category.name
+      if theme.busuanzi == true
+        script(src='https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js', async)
+        span#busuanzi_container_page_pv= ' | '
+          span#busuanzi_value_page_pv
+          span= ' ' + __('Hits')
+      if theme.wordcount == true
+        include _partial/wordcount.pug
+    if theme.disqus
+      a.disqus-comment-count(data-disqus-identifier=page.path, href=url_for(page.path) + '#disqus_thread')
+    if theme.changyan
+      a.ds-thread-count(href=url_for(page.path) + '#SOHUCS')
+        span#changyan_count_unit(style='font-size: 15px; color: #6E7173;') 0
+        span= ' ' + __('Comment')
+      script(src='https://assets.changyan.sohu.com/upload/plugins/plugins.count.js', async)
+    if theme.valine.enable
+      a.disqus-comment-count( href=url_for(page.path) + '#vcomment')
+        span.valine-comment-count(data-xid=url_for(page.path))
+        span= ' ' + __('Comment')
+    if page.toc
+      div(class='clear')
+        div(id='toc' class='toc-article')
+          div(class='toc-title')= __('contents')
+          != toc(page.content, {list_number: theme.toc_number})
+    .post-content
+      != page.content
+    if theme.donate.enable == true
+      iframe(src='/donate/?AliPayQR=' + theme.donate.alipay_qr + '&WeChatQR=' + theme.donate.wechat_qr + '&GitHub=' + theme.donate.github + '&BTCQR=' + theme.donate.btc_qr + '&BTCKEY='+ theme.donate.btc_key + '&PayPal=' + theme.donate.paypal_url, style='overflow-x:hidden; overflow-y:hidden; border:0xp none #fff; min-height:240px; width:100%;', frameborder='0', scrolling='no')
 
-  <script src="//cdn.bootcss.com/require.js/2.3.2/require.min.js"></script>
-  <script src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+    if theme.post_copyright.enable == true
+      div
+        ul.post-copyright
+          li.post-copyright-author
+            strong= __('copyright_author_prefix')
+            = theme.post_copyright.author
+          li.post-copyright-link
+            strong= __('copyright_link_prefix')
+            a(href='/' + page.path)= page.permalink
+          li.post-copyright-license
+            strong= __('copyright_declare_prefix')
+            if theme.post_copyright.copyright_text
+              != theme.post_copyright.copyright_text
+            else
+              != __('copyright_default_text')
+      br
 
-  
-</head>
-<body>
-  <div id="container">
-    <div id="particles-js"></div>
-    <div class="left-col">
-    <div class="overlay"></div>
-<div class="intrude-less">
-	<header id="header" class="inner">
-		<a href="/" class="profilepic">
-			
-			<img lazy-src="http://7xkj1z.com1.z0.glb.clouddn.com/head.jpg" class="js-avatar">
-			
-		</a>
+    if theme.shareto == true
+      script(type='text/javascript', src=url_for(theme.js) + '/share.js' + '?v=' + theme.version, async)
+      a.article-share-link(data-url=page.permalink, data-id=page._id, data-qrcode=qrcode(page.permalink))= __('shareto')
 
-		<hgroup>
-		  <h1 class="header-author"><a href="/">李</a></h1>
-		</hgroup>
+    include _partial/tag.pug
+    include _partial/post_nav.pug
 
-		
-
-		
-			<div class="switch-btn">
-				<div class="icon">
-					<div class="icon-ctn">
-						<div class="icon-wrap icon-house" data-idx="0">
-							<div class="birdhouse"></div>
-							<div class="birdhouse_holes"></div>
-						</div>
-						<div class="icon-wrap icon-ribbon hide" data-idx="1">
-							<div class="ribbon"></div>
-						</div>
-						
-						<div class="icon-wrap icon-link hide" data-idx="2">
-							<div class="loopback_l"></div>
-							<div class="loopback_r"></div>
-						</div>
-						
-						
-					</div>
-					
-				</div>
-				<div class="tips-box hide">
-					<div class="tips-arrow"></div>
-					<ul class="tips-inner">
-						<li>菜单</li>
-						<li>标签</li>
-						
-						<li>友情链接</li>
-						
-						
-					</ul>
-				</div>
-			</div>
-		
-
-		<div class="switch-area">
-			<div class="switch-wrap">
-				<section class="switch-part switch-part1">
-					<nav class="header-menu">
-						<ul>
-						
-							<li><a href="/">主页</a></li>
-				        
-							<li><a href="/archives">所有文章</a></li>
-				        
-							<li><a href="/archives">归档</a></li>
-				        
-						</ul>
-					</nav>
-					<nav class="header-nav">
-						<div class="social">
-							
-						</div>
-					</nav>
-				</section>
-				
-				
-				<section class="switch-part switch-part2">
-					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/iOS/" style="font-size: 10px;">iOS</a>
-					</div>
-				</section>
-				
-				
-				
-				<section class="switch-part switch-part3">
-					<div id="js-friends">
-					
-			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://github.com/smackgg/hexo-theme-smackdown">smackdown</a>
-			        
-			        </div>
-				</section>
-				
-
-				
-			</div>
-		</div>
-	</header>				
-</div>
-    </div>
-    <div class="mid-col">
-      <nav id="mobile-nav">
-  	<div class="overlay">
-  		<div class="slider-trigger"></div>
-  		<h1 class="header-author js-mobile-header hide">李</h1>
-  	</div>
-	<div class="intrude-less">
-		<header id="header" class="inner">
-			<div class="profilepic">
-				<img lazy-src="http://7xkj1z.com1.z0.glb.clouddn.com/head.jpg" class="js-avatar">
-			</div>
-			<hgroup>
-			  <h1 class="header-author">李</h1>
-			</hgroup>
-			
-			<nav class="header-menu">
-				<ul>
-				
-					<li><a href="/">主页</a></li>
-		        
-					<li><a href="/archives">所有文章</a></li>
-		        
-					<li><a href="/archives">归档</a></li>
-		        
-		        <div class="clearfix"></div>
-				</ul>
-			</nav>
-			<nav class="header-nav">
-				<div class="social">
-					
-				</div>
-			</nav>
-		</header>				
-	</div>
-</nav>
-      <div class="body-wrap"><article id="post-Block-基础" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2018/10/14/Block-基础/" class="article-date">
-  	<time datetime="2018-10-14T09:19:04.000Z" itemprop="datePublished">2018-10-14</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="article-title" itemprop="name">
-      Block 基础
-      
-    </h1>
-  
-
-      </header>
-      
-      <div class="article-info article-info-post">
-        
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/">iOS</a></li></ul>
-	</div>
-
-        
-
-        
-        <div class="clearfix"></div>
-      </div>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="Block-语法"><a href="#Block-语法" class="headerlink" title="Block 语法"></a>Block 语法</h2><p>Block 可以认为是一种匿名函数，使用如下语法声明一个 Block 类型：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">return_type (^block_name)(parameters)</span><br></pre></td></tr></table></figure></p>
-<p>例如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">double (^multiplyTwoValues)(double, double);</span><br></pre></td></tr></table></figure></p>
-<p>Block 字面值的写法如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">^ (double firstValue, double secondValue) &#123;</span><br><span class="line">    return firstValue * secondValue;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>上面的写法省略了返回值的类型，也可以显式地指出返回值类型。</p>
-<p>声明并且定义完一个Block之后，便可以像使用函数一样使用它：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">double (^multiplyTwoValues)(double, double) =</span><br><span class="line">                          ^(double firstValue, double secondValue) &#123;            </span><br><span class="line">                              return firstValue * secondValue;</span><br><span class="line">                          &#125;;</span><br><span class="line">double result = multiplyTwoValues(2,4);</span><br><span class="line"></span><br><span class="line">NSLog(@&quot;The result is %f&quot;, result);</span><br></pre></td></tr></table></figure></p>
-<p>同时，Block 也是一种 Objective-C 对象，可以用于赋值，当做参数传递，也可以放入 NSArray 和 NSDictionary 中。</p>
-<p>注意：当用于函数参数时，Block 应该放在参数列表的最后一个。</p>
-<p>由于 Block 的语法是如此的晦涩难记，以至于出现了 <a href="http://fuckingblocksyntax.com" target="_blank" rel="noopener">fuckingblocksyntax</a> 这样的网站专门用于记录 block 的语法，翻译并摘录如下：</p>
-<p>作为变量:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">returnType (^blockName)(parameterTypes) = ^returnType(parameters) &#123;...&#125;;</span><br></pre></td></tr></table></figure></p>
-<p>作为属性:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@property (nonatomic, copy) returnType (^blockName)(parameterTypes);</span><br></pre></td></tr></table></figure></p>
-<p>作为函数声明中的参数:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">- (void)someMethodThatTakesABlock:(returnType (^)(parameterTypes))blockName;</span><br></pre></td></tr></table></figure></p>
-<p>作为函数调用中的参数:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[someObject someMethodThatTakesABlock:^returnType (parameters) &#123;...&#125;];</span><br></pre></td></tr></table></figure></p>
-<p>作为 typedef:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">typedef returnType (^TypeName)(parameterTypes);</span><br><span class="line">TypeName blockName = ^returnType(parameters) &#123;...&#125;;</span><br></pre></td></tr></table></figure></p>
-<h2 id="Block-可以捕获外部变量"><a href="#Block-可以捕获外部变量" class="headerlink" title="Block 可以捕获外部变量"></a>Block 可以捕获外部变量</h2><p>Block 可以捕获来自外部作用域的变量，这是Block一个很强大的特性。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">- (void)testMethod &#123;</span><br><span class="line">    int anInteger = 42;</span><br><span class="line">    void (^testBlock)(void) = ^&#123;</span><br><span class="line">        NSLog(@&quot;Integer is: %i&quot;, anInteger);</span><br><span class="line">    &#125;;</span><br><span class="line">    testBlock();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>默认情况下，Block 中捕获的到变量是不能修改的，如果想修改，需要使用__block来声明：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">__block int anInteger = 42;</span><br></pre></td></tr></table></figure></p>
-<p>对于 id 类型的变量，在 MRC 情况下，使用 <strong>block id x 不会 retain 变量，而在 ARC 情况下则会对变量进行 retain（即和其他捕获的变量相同）。如果不想在 block 中进行 retain 可以使用 </strong>unsafe_unretained <strong>block id x，不过这样可能会导致野指针出现。更好的办法是使用 </strong>weak 的临时变量：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">MyViewController *myController = [[MyViewController alloc] init];</span><br><span class="line"></span><br><span class="line">MyViewController * __weak weakMyViewController = myController;</span><br><span class="line">myController.completionHandler =  ^(NSInteger result) &#123;</span><br><span class="line">    [weakMyViewController dismissViewControllerAnimated:YES completion:nil];</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
-<p>或者把使用 __block 修饰的变量设为 nil，以打破引用循环：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">MyViewController * __block myController = [[MyViewController alloc] init];</span><br><span class="line"></span><br><span class="line">myController.completionHandler =  ^(NSInteger result) &#123;</span><br><span class="line">    [myController dismissViewControllerAnimated:YES completion:nil];</span><br><span class="line">    myController = nil;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
-
-      
-    </div>
-    
-  </div>
-  
-    
-<nav id="article-nav">
-  
-    <a href="/2018/10/14/Block-进阶/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">&lt;</strong>
-      <div class="article-nav-title">
-        
-          Block 进阶
-        
-      </div>
-    </a>
-  
-  
-    <a href="/2018/10/13/Protocol-Category-和-Extension/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Protocol, Category 和 Extension</div>
-      <strong class="article-nav-caption">&gt;</strong>
-    </a>
-  
-</nav>
-
-  
-</article>
-
-
-<div class="ds-share share" data-thread-key="Block-基础" data-title="Block 基础" data-url="http://yoursite.com/2018/10/14/Block-基础/"  data-images="http://7xkj1z.com1.z0.glb.clouddn.com/head.jpg" data-content="Block 基础">
-    <div class="ds-share-inline">
-      <ul  class="ds-share-icons-16">
-      	<li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
-        <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
-        <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
-        <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
-        <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
-      </ul>
-      <div class="ds-share-icons-more">
-      </div>
-    </div>
- </div>
- 
-
-
-
-
-
-</div>
-      <footer id="footer">
-  <div class="outer">
-    <div id="footer-info">
-      <div class="footer-left">
-        &copy; 2018 李
-      </div>
-        <div class="footer-right">
-          <a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/smackgg/hexo-theme-smackdown" target="_blank">Smackdown</a>
-        </div>
-    </div>
-  </div>
-</footer>
-    </div>
-    
-  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
-
-
-<script>
-	var yiliaConfig = {
-		fancybox: true,
-		mathjax: true,
-		animate: true,
-		isHome: false,
-		isPost: true,
-		isArchive: false,
-		isTag: false,
-		isCategory: false,
-		open_in_new: false
-	}
-</script>
-<script src="/js/main.js"></script>
-
-
-
-<script type="text/x-mathjax-config">
-MathJax.Hub.Config({
-    tex2jax: {
-        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
-        processEscapes: true,
-        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-    }
-});
-
-MathJax.Hub.Queue(function() {
-    var all = MathJax.Hub.getAllJax(), i;
-    for(i=0; i < all.length; i += 1) {
-        all[i].SourceElement().parentNode.className += ' has-jax';                 
-    }       
-});
-</script>
-
-<script src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js"></script>
-
-
-  </div>
-</body>
-</html>
+    if page.comments
+      include _partial/comments.pug

@@ -1,330 +1,68 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  
-  <title>Block 进阶 | SixSixSix</title>
+extends base
 
-  <!-- keywords -->
-  
+block title
+  title= page.title + ' | ' + config.title
 
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="使用 Block 时的注意事项在非 ARC 的情况下，对于 block 类型的属性应该使用 copy ，因为 block 需要维持其作用域中捕获的变量。在 ARC 中编译器会自动对 block 进行 copy 操作，因此使用 strong 或者 copy 都可以，没有什么区别，但是苹果仍然建议使用 copy 来指明编译器的行为。 block 在捕获外部变量的时候，会保持一个强引用，当在 block">
-<meta name="keywords" content="iOS">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Block 进阶">
-<meta property="og:url" content="http://yoursite.com/2018/10/14/Block-进阶/index.html">
-<meta property="og:site_name" content="SixSixSix">
-<meta property="og:description" content="使用 Block 时的注意事项在非 ARC 的情况下，对于 block 类型的属性应该使用 copy ，因为 block 需要维持其作用域中捕获的变量。在 ARC 中编译器会自动对 block 进行 copy 操作，因此使用 strong 或者 copy 都可以，没有什么区别，但是苹果仍然建议使用 copy 来指明编译器的行为。 block 在捕获外部变量的时候，会保持一个强引用，当在 block">
-<meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-10-14T09:54:45.437Z">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Block 进阶">
-<meta name="twitter:description" content="使用 Block 时的注意事项在非 ARC 的情况下，对于 block 类型的属性应该使用 copy ，因为 block 需要维持其作用域中捕获的变量。在 ARC 中编译器会自动对 block 进行 copy 操作，因此使用 strong 或者 copy 都可以，没有什么区别，但是苹果仍然建议使用 copy 来指明编译器的行为。 block 在捕获外部变量的时候，会保持一个强引用，当在 block">
-  
-    <link rel="alternative" href="/atom.xml" title="SixSixSix" type="application/atom+xml">
-  
-  
-    <link rel="icon" href="http://7xkj1z.com1.z0.glb.clouddn.com/head.jpg">
-  
-  <link rel="stylesheet" href="/css/style.css">
-  
-  
+block content
+  .post
+    h1.post-title= page.title
+    .post-meta= page.date.format('ll')
+      if page.categories.length > 0
+        span= ' | '
+        span.category
+          for category in page.categories.toArray()
+            a(href=url_for(category.path))= category.name
+      if theme.busuanzi == true
+        script(src='https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js', async)
+        span#busuanzi_container_page_pv= ' | '
+          span#busuanzi_value_page_pv
+          span= ' ' + __('Hits')
+      if theme.wordcount == true
+        include _partial/wordcount.pug
+    if theme.disqus
+      a.disqus-comment-count(data-disqus-identifier=page.path, href=url_for(page.path) + '#disqus_thread')
+    if theme.changyan
+      a.ds-thread-count(href=url_for(page.path) + '#SOHUCS')
+        span#changyan_count_unit(style='font-size: 15px; color: #6E7173;') 0
+        span= ' ' + __('Comment')
+      script(src='https://assets.changyan.sohu.com/upload/plugins/plugins.count.js', async)
+    if theme.valine.enable
+      a.disqus-comment-count( href=url_for(page.path) + '#vcomment')
+        span.valine-comment-count(data-xid=url_for(page.path))
+        span= ' ' + __('Comment')
+    if page.toc
+      div(class='clear')
+        div(id='toc' class='toc-article')
+          div(class='toc-title')= __('contents')
+          != toc(page.content, {list_number: theme.toc_number})
+    .post-content
+      != page.content
+    if theme.donate.enable == true
+      iframe(src='/donate/?AliPayQR=' + theme.donate.alipay_qr + '&WeChatQR=' + theme.donate.wechat_qr + '&GitHub=' + theme.donate.github + '&BTCQR=' + theme.donate.btc_qr + '&BTCKEY='+ theme.donate.btc_key + '&PayPal=' + theme.donate.paypal_url, style='overflow-x:hidden; overflow-y:hidden; border:0xp none #fff; min-height:240px; width:100%;', frameborder='0', scrolling='no')
 
-  <script src="//cdn.bootcss.com/require.js/2.3.2/require.min.js"></script>
-  <script src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+    if theme.post_copyright.enable == true
+      div
+        ul.post-copyright
+          li.post-copyright-author
+            strong= __('copyright_author_prefix')
+            = theme.post_copyright.author
+          li.post-copyright-link
+            strong= __('copyright_link_prefix')
+            a(href='/' + page.path)= page.permalink
+          li.post-copyright-license
+            strong= __('copyright_declare_prefix')
+            if theme.post_copyright.copyright_text
+              != theme.post_copyright.copyright_text
+            else
+              != __('copyright_default_text')
+      br
 
-  
-</head>
-<body>
-  <div id="container">
-    <div id="particles-js"></div>
-    <div class="left-col">
-    <div class="overlay"></div>
-<div class="intrude-less">
-	<header id="header" class="inner">
-		<a href="/" class="profilepic">
-			
-			<img lazy-src="http://7xkj1z.com1.z0.glb.clouddn.com/head.jpg" class="js-avatar">
-			
-		</a>
+    if theme.shareto == true
+      script(type='text/javascript', src=url_for(theme.js) + '/share.js' + '?v=' + theme.version, async)
+      a.article-share-link(data-url=page.permalink, data-id=page._id, data-qrcode=qrcode(page.permalink))= __('shareto')
 
-		<hgroup>
-		  <h1 class="header-author"><a href="/">李</a></h1>
-		</hgroup>
+    include _partial/tag.pug
+    include _partial/post_nav.pug
 
-		
-
-		
-			<div class="switch-btn">
-				<div class="icon">
-					<div class="icon-ctn">
-						<div class="icon-wrap icon-house" data-idx="0">
-							<div class="birdhouse"></div>
-							<div class="birdhouse_holes"></div>
-						</div>
-						<div class="icon-wrap icon-ribbon hide" data-idx="1">
-							<div class="ribbon"></div>
-						</div>
-						
-						<div class="icon-wrap icon-link hide" data-idx="2">
-							<div class="loopback_l"></div>
-							<div class="loopback_r"></div>
-						</div>
-						
-						
-					</div>
-					
-				</div>
-				<div class="tips-box hide">
-					<div class="tips-arrow"></div>
-					<ul class="tips-inner">
-						<li>菜单</li>
-						<li>标签</li>
-						
-						<li>友情链接</li>
-						
-						
-					</ul>
-				</div>
-			</div>
-		
-
-		<div class="switch-area">
-			<div class="switch-wrap">
-				<section class="switch-part switch-part1">
-					<nav class="header-menu">
-						<ul>
-						
-							<li><a href="/">主页</a></li>
-				        
-							<li><a href="/archives">所有文章</a></li>
-				        
-							<li><a href="/archives">归档</a></li>
-				        
-						</ul>
-					</nav>
-					<nav class="header-nav">
-						<div class="social">
-							
-						</div>
-					</nav>
-				</section>
-				
-				
-				<section class="switch-part switch-part2">
-					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/iOS/" style="font-size: 10px;">iOS</a>
-					</div>
-				</section>
-				
-				
-				
-				<section class="switch-part switch-part3">
-					<div id="js-friends">
-					
-			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://github.com/smackgg/hexo-theme-smackdown">smackdown</a>
-			        
-			        </div>
-				</section>
-				
-
-				
-			</div>
-		</div>
-	</header>				
-</div>
-    </div>
-    <div class="mid-col">
-      <nav id="mobile-nav">
-  	<div class="overlay">
-  		<div class="slider-trigger"></div>
-  		<h1 class="header-author js-mobile-header hide">李</h1>
-  	</div>
-	<div class="intrude-less">
-		<header id="header" class="inner">
-			<div class="profilepic">
-				<img lazy-src="http://7xkj1z.com1.z0.glb.clouddn.com/head.jpg" class="js-avatar">
-			</div>
-			<hgroup>
-			  <h1 class="header-author">李</h1>
-			</hgroup>
-			
-			<nav class="header-menu">
-				<ul>
-				
-					<li><a href="/">主页</a></li>
-		        
-					<li><a href="/archives">所有文章</a></li>
-		        
-					<li><a href="/archives">归档</a></li>
-		        
-		        <div class="clearfix"></div>
-				</ul>
-			</nav>
-			<nav class="header-nav">
-				<div class="social">
-					
-				</div>
-			</nav>
-		</header>				
-	</div>
-</nav>
-      <div class="body-wrap"><article id="post-Block-进阶" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2018/10/14/Block-进阶/" class="article-date">
-  	<time datetime="2018-10-14T09:33:45.000Z" itemprop="datePublished">2018-10-14</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="article-title" itemprop="name">
-      Block 进阶
-      
-    </h1>
-  
-
-      </header>
-      
-      <div class="article-info article-info-post">
-        
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/">iOS</a></li></ul>
-	</div>
-
-        
-
-        
-        <div class="clearfix"></div>
-      </div>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="使用-Block-时的注意事项"><a href="#使用-Block-时的注意事项" class="headerlink" title="使用 Block 时的注意事项"></a>使用 Block 时的注意事项</h2><p>在非 ARC 的情况下，对于 block 类型的属性应该使用 copy ，因为 block 需要维持其作用域中捕获的变量。在 ARC 中编译器会自动对 block 进行 copy 操作，因此使用 strong 或者 copy 都可以，没有什么区别，但是苹果仍然建议使用 copy 来指明编译器的行为。</p>
-<p>block 在捕获外部变量的时候，会保持一个强引用，当在 block 中捕获 self 时，由于对象会对 block 进行 copy，于是便形成了强引用循环：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">@interface XYZBlockKeeper : NSObject</span><br><span class="line">@property (copy) void (^block)(void);</span><br><span class="line">@end</span><br></pre></td></tr></table></figure></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">@implementation XYZBlockKeeper</span><br><span class="line">- (void)configureBlock &#123;</span><br><span class="line">    self.block = ^&#123;</span><br><span class="line">        [self doSomething];  </span><br><span class="line">                               </span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
-<p>为了避免强引用循环，最好捕获一个 self 的弱引用：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">- (void)configureBlock &#123;</span><br><span class="line">    XYZBlockKeeper * __weak weakSelf = self;</span><br><span class="line">    self.block = ^&#123;</span><br><span class="line">        [weakSelf doSomething];   </span><br><span class="line">                                  </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>使用弱引用会带来另一个问题，weakSelf 有可能会为 nil，如果多次调用 weakSelf 的方法，有可能在 block 执行过程中 weakSelf 变为 nil。因此需要在 block 中将 weakSelf “强化”<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">__weak typeof(self) weakSelf = self;</span><br><span class="line">NSBlockOperation *op = [[NSBlockOperation alloc] init];</span><br><span class="line">[op addExecutionBlock:^ &#123;</span><br><span class="line">    __strong typeof(self) strongSelf = weakSelf;</span><br><span class="line">    [strongSelf doSomething];</span><br><span class="line">    [strongSelf doMoreThing];</span><br><span class="line">&#125;];</span><br><span class="line">[someOperationQueue addOperation:op];</span><br></pre></td></tr></table></figure></p>
-<p>doSomething 和 doMoreThing 要么全执行成功，要么全失败，不会出现一个成功一个失败，即执行到中间 self 变成 nil 的情况。</p>
-<h2 id="Block-在堆上还是在栈上？"><a href="#Block-在堆上还是在栈上？" class="headerlink" title="Block 在堆上还是在栈上？"></a>Block 在堆上还是在栈上？</h2><p>首先要指出，Block 在非 ARC 和 ARC 两种环境下的内存机制差别很大。</p>
-<p>在 MRC 下，Block 默认是分配在栈上的，除非进行显式的 copy：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">__block int val = 10;</span><br><span class="line">blk stackBlock = ^&#123;</span><br><span class="line">    NSLog(@&quot;val = %d&quot;, val++);</span><br><span class="line">&#125;;</span><br><span class="line">NSLog(@&quot;stackBlock: %@&quot;, stackBlock); // stackBlock: &lt;__NSStackBlock__: 0xbfffdb28&gt;</span><br><span class="line"></span><br><span class="line">tempBlock = [stackBlock copy];</span><br><span class="line">NSLog(@&quot;tempBlock: %@&quot;, tempBlock);  // tempBlock: &lt;__NSMallocBlock__: 0x756bf20&gt;</span><br></pre></td></tr></table></figure></p>
-<p>想把 Block 用作返回值的时候，也要加入 copy 和 autorelease：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">- (blk)myTestBlock &#123;</span><br><span class="line">    __block int val = 10;</span><br><span class="line">    blk stackBlock = ^&#123;</span><br><span class="line">        NSLog(@&quot;val = %d&quot;, val++);</span><br><span class="line">    &#125;;</span><br><span class="line">    return [[stackBlock copy] autorelease];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>在 ARC 环境下，Block 使用简化了很多，同时 ARC 也更加倾向于把 Block 放到堆上：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">__block int val = 10;</span><br><span class="line">__strong blk strongPointerBlock = ^&#123;</span><br><span class="line">    NSLog(@&quot;val = %d&quot;, val++);</span><br><span class="line">&#125;;</span><br><span class="line">NSLog(@&quot;strongPointerBlock: %@&quot;, strongPointerBlock); // strongPointerBlock: &lt;__NSMallocBlock__: 0x7625120&gt;</span><br><span class="line"></span><br><span class="line">__weak blk weakPointerBlock = ^&#123;</span><br><span class="line">    NSLog(@&quot;val = %d&quot;, val++);</span><br><span class="line">&#125;;</span><br><span class="line">NSLog(@&quot;weakPointerBlock: %@&quot;, weakPointerBlock); // weakPointerBlock: &lt;__NSStackBlock__: 0xbfffdb30&gt;</span><br><span class="line"></span><br><span class="line">NSLog(@&quot;mallocBlock: %@&quot;, [weakPointerBlock copy]); // mallocBlock: &lt;__NSMallocBlock__: 0x714ce60&gt;</span><br><span class="line"></span><br><span class="line">NSLog(@&quot;test %@&quot;, ^&#123;NSLog(@&quot;val = %d&quot;, val++);&#125;); // test &lt;__NSStackBlock__: 0xbfffdb18&gt;</span><br></pre></td></tr></table></figure></p>
-<p>可以看到只有显式的 <strong>weak 以及纯匿名 Block 是放到栈上的，赋值给 </strong>strong 指针（也就是默认赋值）都会导致在堆上创建 Block。</p>
-<p>对于把 Block 作为函数返回值的情况，ARC 也能自动处理：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">- (__unsafe_unretained blk) blockTest &#123;</span><br><span class="line">    int val = 11;</span><br><span class="line">    return ^&#123;NSLog(@&quot;val = %d&quot;, val);&#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">NSLog(@&quot;block return from function: %@&quot;, [self blockTest]); // block return from function: &lt;__NSMallocBlock__: 0x7685640&gt;</span><br></pre></td></tr></table></figure></p>
-
-      
-    </div>
-    
-  </div>
-  
-    
-<nav id="article-nav">
-  
-    <a href="/2018/10/14/UIView/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">&lt;</strong>
-      <div class="article-nav-title">
-        
-          UIView
-        
-      </div>
-    </a>
-  
-  
-    <a href="/2018/10/14/Block-基础/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Block 基础</div>
-      <strong class="article-nav-caption">&gt;</strong>
-    </a>
-  
-</nav>
-
-  
-</article>
-
-
-<div class="ds-share share" data-thread-key="Block-进阶" data-title="Block 进阶" data-url="http://yoursite.com/2018/10/14/Block-进阶/"  data-images="http://7xkj1z.com1.z0.glb.clouddn.com/head.jpg" data-content="Block 进阶">
-    <div class="ds-share-inline">
-      <ul  class="ds-share-icons-16">
-      	<li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
-        <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
-        <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
-        <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
-        <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
-      </ul>
-      <div class="ds-share-icons-more">
-      </div>
-    </div>
- </div>
- 
-
-
-
-
-
-</div>
-      <footer id="footer">
-  <div class="outer">
-    <div id="footer-info">
-      <div class="footer-left">
-        &copy; 2018 李
-      </div>
-        <div class="footer-right">
-          <a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/smackgg/hexo-theme-smackdown" target="_blank">Smackdown</a>
-        </div>
-    </div>
-  </div>
-</footer>
-    </div>
-    
-  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
-
-
-<script>
-	var yiliaConfig = {
-		fancybox: true,
-		mathjax: true,
-		animate: true,
-		isHome: false,
-		isPost: true,
-		isArchive: false,
-		isTag: false,
-		isCategory: false,
-		open_in_new: false
-	}
-</script>
-<script src="/js/main.js"></script>
-
-
-
-<script type="text/x-mathjax-config">
-MathJax.Hub.Config({
-    tex2jax: {
-        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
-        processEscapes: true,
-        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-    }
-});
-
-MathJax.Hub.Queue(function() {
-    var all = MathJax.Hub.getAllJax(), i;
-    for(i=0; i < all.length; i += 1) {
-        all[i].SourceElement().parentNode.className += ' has-jax';                 
-    }       
-});
-</script>
-
-<script src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js"></script>
-
-
-  </div>
-</body>
-</html>
+    if page.comments
+      include _partial/comments.pug

@@ -1,378 +1,68 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  
-  <title>UIView | SixSixSix</title>
+extends base
 
-  <!-- keywords -->
-  
+block title
+  title= page.title + ' | ' + config.title
 
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="UIView 表示屏幕上的一块矩形区域，负责渲染区域的内容，并且响应该区域内发生的触摸事件。它在iOS App中占有绝对重要的地位，因为iOS中几乎所有可视化控件都是 UIView 的子类。 UIView 可以负责以下几种任务：  绘制和动画 布局和子视图管理 事件处理  绘制和动画视图绘制UIView 是按需绘制的，当整个视图或者视图的一部分由于布局变化，变成可见的，系统会要求视图进行绘制。对于">
-<meta name="keywords" content="iOS">
-<meta property="og:type" content="article">
-<meta property="og:title" content="UIView">
-<meta property="og:url" content="http://yoursite.com/2018/10/14/UIView/index.html">
-<meta property="og:site_name" content="SixSixSix">
-<meta property="og:description" content="UIView 表示屏幕上的一块矩形区域，负责渲染区域的内容，并且响应该区域内发生的触摸事件。它在iOS App中占有绝对重要的地位，因为iOS中几乎所有可视化控件都是 UIView 的子类。 UIView 可以负责以下几种任务：  绘制和动画 布局和子视图管理 事件处理  绘制和动画视图绘制UIView 是按需绘制的，当整个视图或者视图的一部分由于布局变化，变成可见的，系统会要求视图进行绘制。对于">
-<meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-10-14T10:23:22.764Z">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="UIView">
-<meta name="twitter:description" content="UIView 表示屏幕上的一块矩形区域，负责渲染区域的内容，并且响应该区域内发生的触摸事件。它在iOS App中占有绝对重要的地位，因为iOS中几乎所有可视化控件都是 UIView 的子类。 UIView 可以负责以下几种任务：  绘制和动画 布局和子视图管理 事件处理  绘制和动画视图绘制UIView 是按需绘制的，当整个视图或者视图的一部分由于布局变化，变成可见的，系统会要求视图进行绘制。对于">
-  
-    <link rel="alternative" href="/atom.xml" title="SixSixSix" type="application/atom+xml">
-  
-  
-    <link rel="icon" href="http://7xkj1z.com1.z0.glb.clouddn.com/head.jpg">
-  
-  <link rel="stylesheet" href="/css/style.css">
-  
-  
+block content
+  .post
+    h1.post-title= page.title
+    .post-meta= page.date.format('ll')
+      if page.categories.length > 0
+        span= ' | '
+        span.category
+          for category in page.categories.toArray()
+            a(href=url_for(category.path))= category.name
+      if theme.busuanzi == true
+        script(src='https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js', async)
+        span#busuanzi_container_page_pv= ' | '
+          span#busuanzi_value_page_pv
+          span= ' ' + __('Hits')
+      if theme.wordcount == true
+        include _partial/wordcount.pug
+    if theme.disqus
+      a.disqus-comment-count(data-disqus-identifier=page.path, href=url_for(page.path) + '#disqus_thread')
+    if theme.changyan
+      a.ds-thread-count(href=url_for(page.path) + '#SOHUCS')
+        span#changyan_count_unit(style='font-size: 15px; color: #6E7173;') 0
+        span= ' ' + __('Comment')
+      script(src='https://assets.changyan.sohu.com/upload/plugins/plugins.count.js', async)
+    if theme.valine.enable
+      a.disqus-comment-count( href=url_for(page.path) + '#vcomment')
+        span.valine-comment-count(data-xid=url_for(page.path))
+        span= ' ' + __('Comment')
+    if page.toc
+      div(class='clear')
+        div(id='toc' class='toc-article')
+          div(class='toc-title')= __('contents')
+          != toc(page.content, {list_number: theme.toc_number})
+    .post-content
+      != page.content
+    if theme.donate.enable == true
+      iframe(src='/donate/?AliPayQR=' + theme.donate.alipay_qr + '&WeChatQR=' + theme.donate.wechat_qr + '&GitHub=' + theme.donate.github + '&BTCQR=' + theme.donate.btc_qr + '&BTCKEY='+ theme.donate.btc_key + '&PayPal=' + theme.donate.paypal_url, style='overflow-x:hidden; overflow-y:hidden; border:0xp none #fff; min-height:240px; width:100%;', frameborder='0', scrolling='no')
 
-  <script src="//cdn.bootcss.com/require.js/2.3.2/require.min.js"></script>
-  <script src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+    if theme.post_copyright.enable == true
+      div
+        ul.post-copyright
+          li.post-copyright-author
+            strong= __('copyright_author_prefix')
+            = theme.post_copyright.author
+          li.post-copyright-link
+            strong= __('copyright_link_prefix')
+            a(href='/' + page.path)= page.permalink
+          li.post-copyright-license
+            strong= __('copyright_declare_prefix')
+            if theme.post_copyright.copyright_text
+              != theme.post_copyright.copyright_text
+            else
+              != __('copyright_default_text')
+      br
 
-  
-</head>
-<body>
-  <div id="container">
-    <div id="particles-js"></div>
-    <div class="left-col">
-    <div class="overlay"></div>
-<div class="intrude-less">
-	<header id="header" class="inner">
-		<a href="/" class="profilepic">
-			
-			<img lazy-src="http://7xkj1z.com1.z0.glb.clouddn.com/head.jpg" class="js-avatar">
-			
-		</a>
+    if theme.shareto == true
+      script(type='text/javascript', src=url_for(theme.js) + '/share.js' + '?v=' + theme.version, async)
+      a.article-share-link(data-url=page.permalink, data-id=page._id, data-qrcode=qrcode(page.permalink))= __('shareto')
 
-		<hgroup>
-		  <h1 class="header-author"><a href="/">李</a></h1>
-		</hgroup>
+    include _partial/tag.pug
+    include _partial/post_nav.pug
 
-		
-
-		
-			<div class="switch-btn">
-				<div class="icon">
-					<div class="icon-ctn">
-						<div class="icon-wrap icon-house" data-idx="0">
-							<div class="birdhouse"></div>
-							<div class="birdhouse_holes"></div>
-						</div>
-						<div class="icon-wrap icon-ribbon hide" data-idx="1">
-							<div class="ribbon"></div>
-						</div>
-						
-						<div class="icon-wrap icon-link hide" data-idx="2">
-							<div class="loopback_l"></div>
-							<div class="loopback_r"></div>
-						</div>
-						
-						
-					</div>
-					
-				</div>
-				<div class="tips-box hide">
-					<div class="tips-arrow"></div>
-					<ul class="tips-inner">
-						<li>菜单</li>
-						<li>标签</li>
-						
-						<li>友情链接</li>
-						
-						
-					</ul>
-				</div>
-			</div>
-		
-
-		<div class="switch-area">
-			<div class="switch-wrap">
-				<section class="switch-part switch-part1">
-					<nav class="header-menu">
-						<ul>
-						
-							<li><a href="/">主页</a></li>
-				        
-							<li><a href="/archives">所有文章</a></li>
-				        
-							<li><a href="/archives">归档</a></li>
-				        
-						</ul>
-					</nav>
-					<nav class="header-nav">
-						<div class="social">
-							
-						</div>
-					</nav>
-				</section>
-				
-				
-				<section class="switch-part switch-part2">
-					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/iOS/" style="font-size: 10px;">iOS</a>
-					</div>
-				</section>
-				
-				
-				
-				<section class="switch-part switch-part3">
-					<div id="js-friends">
-					
-			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://github.com/smackgg/hexo-theme-smackdown">smackdown</a>
-			        
-			        </div>
-				</section>
-				
-
-				
-			</div>
-		</div>
-	</header>				
-</div>
-    </div>
-    <div class="mid-col">
-      <nav id="mobile-nav">
-  	<div class="overlay">
-  		<div class="slider-trigger"></div>
-  		<h1 class="header-author js-mobile-header hide">李</h1>
-  	</div>
-	<div class="intrude-less">
-		<header id="header" class="inner">
-			<div class="profilepic">
-				<img lazy-src="http://7xkj1z.com1.z0.glb.clouddn.com/head.jpg" class="js-avatar">
-			</div>
-			<hgroup>
-			  <h1 class="header-author">李</h1>
-			</hgroup>
-			
-			<nav class="header-menu">
-				<ul>
-				
-					<li><a href="/">主页</a></li>
-		        
-					<li><a href="/archives">所有文章</a></li>
-		        
-					<li><a href="/archives">归档</a></li>
-		        
-		        <div class="clearfix"></div>
-				</ul>
-			</nav>
-			<nav class="header-nav">
-				<div class="social">
-					
-				</div>
-			</nav>
-		</header>				
-	</div>
-</nav>
-      <div class="body-wrap"><article id="post-UIView" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2018/10/14/UIView/" class="article-date">
-  	<time datetime="2018-10-14T09:59:10.000Z" itemprop="datePublished">2018-10-14</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="article-title" itemprop="name">
-      UIView
-      
-    </h1>
-  
-
-      </header>
-      
-      <div class="article-info article-info-post">
-        
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/">iOS</a></li></ul>
-	</div>
-
-        
-
-        
-        <div class="clearfix"></div>
-      </div>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>UIView 表示屏幕上的一块矩形区域，负责渲染区域的内容，并且响应该区域内发生的触摸事件。它在iOS App中占有绝对重要的地位，因为iOS中几乎所有可视化控件都是 UIView 的子类。</p>
-<p>UIView 可以负责以下几种任务：</p>
-<ul>
-<li>绘制和动画</li>
-<li>布局和子视图管理</li>
-<li>事件处理</li>
-</ul>
-<h2 id="绘制和动画"><a href="#绘制和动画" class="headerlink" title="绘制和动画"></a>绘制和动画</h2><h3 id="视图绘制"><a href="#视图绘制" class="headerlink" title="视图绘制"></a>视图绘制</h3><p>UIView 是按需绘制的，当整个视图或者视图的一部分由于布局变化，变成可见的，系统会要求视图进行绘制。对于那些需要使用 UIKit 或者 CoreGraphics 进行自定义绘制的视图，系统会调用drawRect:方法进行绘制。</p>
-<p>当视图内容发生变化时，需要调用setNeedsDisplay或者setNeedsDisplayInRect:方法，告诉系统该重新绘制这个视图了。调用这个方法之后，系统会在下一个绘制周期更新这个视图的内容。由于系统要等到下一个绘制周期才真正进行绘制，可以一次性对多个视图调用setNeedsDisplay，它们会同时被更新。</p>
-<h3 id="视图的几何属性"><a href="#视图的几何属性" class="headerlink" title="视图的几何属性"></a>视图的几何属性</h3><p>视图有 frame，center，bounds 等几个基本几何属性，其中:</p>
-<ul>
-<li>frame 使用的最多，其坐标位置都是相对于父视图的，可以用于确定本视图在父视图中的位置和其自身的大小</li>
-<li>center 的坐标位置也是相对于父视图的，通常用于移动，旋转等动画操作</li>
-<li>bounds 是相对于自身的，通常情况下就是（0, 0, width, height)， bounds 的含义可以认为是当前 view 被允许绘制的范围</li>
-</ul>
-<h3 id="视图的-ContentMode"><a href="#视图的-ContentMode" class="headerlink" title="视图的 ContentMode"></a>视图的 ContentMode</h3><p>视图在初次绘制完成后，系统会对绘制结果进行快照，之后尽可能地使用快照，避免重新绘制。如果视图的几何属性发生改变，系统会根据视图的 contentMode 来决定如何改变显示效果。</p>
-<p>默认的 contentMode 是 UIViewContentModeScaleToFill ，系统会拉伸当前的快照，使其符合新的 frame 尺寸。大部分 contentMode 都会对当前的快照进行拉伸或者移动等操作。如果需要重新绘制，可以把 contentMode 设置为 UIViewContentModeRedraw，强制视图在改变大小之类的操作时调用drawRect:重绘。</p>
-<h3 id="动画"><a href="#动画" class="headerlink" title="动画"></a>动画</h3><p>可以以动画的形式改变视图的下面这些属性，只需要告诉系统动画开始和结束时的数值，系统会自动处理中间的过渡过程。</p>
-<ul>
-<li>frame</li>
-<li>bounds</li>
-<li>center</li>
-<li>transform</li>
-<li>alpha</li>
-<li>backgroundColor</li>
-<li>contentStretch</li>
-</ul>
-<h2 id="布局和子视图管理"><a href="#布局和子视图管理" class="headerlink" title="布局和子视图管理"></a>布局和子视图管理</h2><p>除了提供视图本身的内容之外，一个视图也可以表现得像一个容器。当一个视图包含其他视图时，两个视图之间就创建了一个父子关系。在这个关系中子视图被称为 subView ，父视图被称为 superView 。一个视图可以包含多个子视图，它们被存放在这个视图的 subviews 数组里。添加，删除，以及操作这些子视图的相对位置的函数如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">addSubview:</span><br><span class="line">insertSubview:...</span><br><span class="line">bringSubviewToFront:</span><br><span class="line">sendSubviewToBack:</span><br><span class="line">exchangeSubviewAtIndex:withSubviewAtIndex:</span><br><span class="line">removeFromSuperview（子视图调用）</span><br></pre></td></tr></table></figure></p>
-<h3 id="AutoResizing-和-Constraint"><a href="#AutoResizing-和-Constraint" class="headerlink" title="AutoResizing 和 Constraint"></a>AutoResizing 和 Constraint</h3><p>当一个视图的大小改变时，它的子视图的位置和大小也需要相应地改变。UIView 支持自动布局，也可以手动对子视图进行布局。</p>
-<p>当下列这些事件发生时，需要进行布局操作：</p>
-<ul>
-<li>视图的 bounds 大小改变</li>
-<li>用户界面旋转，通常会导致根视图控制器的大小改变</li>
-<li>视图的 layer 层的 Core Animation sublayers 发生改变</li>
-<li>程序调用视图的setNeedsLayout或layoutIfNeeded方法</li>
-<li>程序调用视图 layer 的setNeedsLayout方法 </li>
-</ul>
-<h4 id="Auto-Resizing"><a href="#Auto-Resizing" class="headerlink" title="Auto Resizing"></a>Auto Resizing</h4><p>视图的autoresizesSubviews属性决定了在视图大小发生变化时，如何自动调节子视图。</p>
-<p>可以使用的代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">UIViewAutoresizingNone</span><br><span class="line">UIViewAutoresizingFlexibleHeight</span><br><span class="line">UIViewAutoresizingFlexibleWidth</span><br><span class="line">UIViewAutoresizingFlexibleLeftMargin</span><br><span class="line">UIViewAutoresizingFlexibleRightMargin</span><br><span class="line">UIViewAutoresizingFlexibleBottomMargin</span><br><span class="line">UIViewAutoresizingFlexibleTopMargin</span><br><span class="line">可以通过位运算符将它们组合起来，例如UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth。</span><br></pre></td></tr></table></figure></p>
-<h4 id="Constraint"><a href="#Constraint" class="headerlink" title="Constraint"></a>Constraint</h4><p>Constraint 是另一种用于自动布局的方法。本质上，Constraint 就是对 UIView 之间两个属性的一个约束：</p>
-<p>attribute1 == multiplier × attribute2 + constant<br>其中方程两边不一定是等于关系，也可以是大于等于之类的关系。</p>
-<h4 id="自定义-layout"><a href="#自定义-layout" class="headerlink" title="自定义 layout"></a>自定义 layout</h4><p>UIView 当中提供了一个 layoutSubviews 函数，UIView 的子类可以重载这个函数，以实现更加复杂和精细的子 View 布局。</p>
-<p>苹果文档专门强调了，应该只在上面提到的 Autoresizing 和 Constraint 机制不能实现所需要的效果时，才使用 layoutSubviews。而且，layoutSubviews 方法只能被系统触发调用，程序员不能手动直接调用该方法。</p>
-<p> layoutSubviews 方法调用具体有下面几种情况：</p>
-<ol>
-<li>在父 view 的 autoresize mask 为 ON 的情况下，addSubview 会导致被 add 的 view 调用 layoutSubviews, 同时 add 的 target view 以及它所有的子 view 都会被调用。</li>
-<li>setFrame 当新的 frame 和 旧的不同时（即 view 的大小改变时）会调用 layoutSubviews</li>
-<li>滚动一个 UIScollView 会导致这个 scrollView 以及它的父 View 调用 layoutSubviews</li>
-<li>旋转设备会导致当前所响应的 ViewController 的主 View 调用 layoutSubviews</li>
-<li>改变 View 的 size 会导致父 View 调用 layoutSubviews</li>
-<li>removeFromSuperview 也会导致父 View 调用 layoutSubviews</li>
-</ol>
-<h2 id="事件处理"><a href="#事件处理" class="headerlink" title="事件处理"></a>事件处理</h2><p>UIView 是 UIResponder 的子类，可以响应触控事件。</p>
-<p>通常可以使用addGestureRecognizer:添加手势识别器来响应触控事件，如果需要手动处理，则按需要重载 UIView 中的下面四个函数：</p>
-<ul>
-<li>touchesBegan:withEvent:</li>
-<li>touchesMoved:withEvent:</li>
-<li>touchesEnded:withEvent:</li>
-<li>touchesCancelled:withEvent:</li>
-</ul>
-
-      
-    </div>
-    
-  </div>
-  
-    
-<nav id="article-nav">
-  
-    <a href="/2018/10/14/UIViewController/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">&lt;</strong>
-      <div class="article-nav-title">
-        
-          UIViewController
-        
-      </div>
-    </a>
-  
-  
-    <a href="/2018/10/14/Block-进阶/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Block 进阶</div>
-      <strong class="article-nav-caption">&gt;</strong>
-    </a>
-  
-</nav>
-
-  
-</article>
-
-
-<div class="ds-share share" data-thread-key="UIView" data-title="UIView" data-url="http://yoursite.com/2018/10/14/UIView/"  data-images="http://7xkj1z.com1.z0.glb.clouddn.com/head.jpg" data-content="UIView">
-    <div class="ds-share-inline">
-      <ul  class="ds-share-icons-16">
-      	<li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
-        <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
-        <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
-        <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
-        <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
-      </ul>
-      <div class="ds-share-icons-more">
-      </div>
-    </div>
- </div>
- 
-
-
-
-
-
-</div>
-      <footer id="footer">
-  <div class="outer">
-    <div id="footer-info">
-      <div class="footer-left">
-        &copy; 2018 李
-      </div>
-        <div class="footer-right">
-          <a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/smackgg/hexo-theme-smackdown" target="_blank">Smackdown</a>
-        </div>
-    </div>
-  </div>
-</footer>
-    </div>
-    
-  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
-
-
-<script>
-	var yiliaConfig = {
-		fancybox: true,
-		mathjax: true,
-		animate: true,
-		isHome: false,
-		isPost: true,
-		isArchive: false,
-		isTag: false,
-		isCategory: false,
-		open_in_new: false
-	}
-</script>
-<script src="/js/main.js"></script>
-
-
-
-<script type="text/x-mathjax-config">
-MathJax.Hub.Config({
-    tex2jax: {
-        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
-        processEscapes: true,
-        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-    }
-});
-
-MathJax.Hub.Queue(function() {
-    var all = MathJax.Hub.getAllJax(), i;
-    for(i=0; i < all.length; i += 1) {
-        all[i].SourceElement().parentNode.className += ' has-jax';                 
-    }       
-});
-</script>
-
-<script src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js"></script>
-
-
-  </div>
-</body>
-</html>
+    if page.comments
+      include _partial/comments.pug

@@ -1,352 +1,68 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  
-  <title>Protocol, Category 和 Extension | SixSixSix</title>
+extends base
 
-  <!-- keywords -->
-  
+block title
+  title= page.title + ' | ' + config.title
 
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="ProtocolOC是单继承的，OC中的类可以实现多个 protocol 来实现类似 C++ 中多重继承的效果。 Protocol 类似 Java 中的 interface，定义了一个方法列表，这个方法列表中的方法可以使用 @required， @optional 标注，以表示该方法是否是必须要实现的方法。 一个 protocol 可以继承其他的 protocol 。1234567@protoco">
-<meta name="keywords" content="iOS">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Protocol, Category 和 Extension">
-<meta property="og:url" content="http://yoursite.com/2018/10/13/Protocol-Category-和-Extension/index.html">
-<meta property="og:site_name" content="SixSixSix">
-<meta property="og:description" content="ProtocolOC是单继承的，OC中的类可以实现多个 protocol 来实现类似 C++ 中多重继承的效果。 Protocol 类似 Java 中的 interface，定义了一个方法列表，这个方法列表中的方法可以使用 @required， @optional 标注，以表示该方法是否是必须要实现的方法。 一个 protocol 可以继承其他的 protocol 。1234567@protoco">
-<meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-10-31T08:41:47.175Z">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Protocol, Category 和 Extension">
-<meta name="twitter:description" content="ProtocolOC是单继承的，OC中的类可以实现多个 protocol 来实现类似 C++ 中多重继承的效果。 Protocol 类似 Java 中的 interface，定义了一个方法列表，这个方法列表中的方法可以使用 @required， @optional 标注，以表示该方法是否是必须要实现的方法。 一个 protocol 可以继承其他的 protocol 。1234567@protoco">
-  
-    <link rel="alternative" href="/atom.xml" title="SixSixSix" type="application/atom+xml">
-  
-  
-    <link rel="icon" href="http://7xkj1z.com1.z0.glb.clouddn.com/head.jpg">
-  
-  <link rel="stylesheet" href="/css/style.css">
-  
-  
+block content
+  .post
+    h1.post-title= page.title
+    .post-meta= page.date.format('ll')
+      if page.categories.length > 0
+        span= ' | '
+        span.category
+          for category in page.categories.toArray()
+            a(href=url_for(category.path))= category.name
+      if theme.busuanzi == true
+        script(src='https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js', async)
+        span#busuanzi_container_page_pv= ' | '
+          span#busuanzi_value_page_pv
+          span= ' ' + __('Hits')
+      if theme.wordcount == true
+        include _partial/wordcount.pug
+    if theme.disqus
+      a.disqus-comment-count(data-disqus-identifier=page.path, href=url_for(page.path) + '#disqus_thread')
+    if theme.changyan
+      a.ds-thread-count(href=url_for(page.path) + '#SOHUCS')
+        span#changyan_count_unit(style='font-size: 15px; color: #6E7173;') 0
+        span= ' ' + __('Comment')
+      script(src='https://assets.changyan.sohu.com/upload/plugins/plugins.count.js', async)
+    if theme.valine.enable
+      a.disqus-comment-count( href=url_for(page.path) + '#vcomment')
+        span.valine-comment-count(data-xid=url_for(page.path))
+        span= ' ' + __('Comment')
+    if page.toc
+      div(class='clear')
+        div(id='toc' class='toc-article')
+          div(class='toc-title')= __('contents')
+          != toc(page.content, {list_number: theme.toc_number})
+    .post-content
+      != page.content
+    if theme.donate.enable == true
+      iframe(src='/donate/?AliPayQR=' + theme.donate.alipay_qr + '&WeChatQR=' + theme.donate.wechat_qr + '&GitHub=' + theme.donate.github + '&BTCQR=' + theme.donate.btc_qr + '&BTCKEY='+ theme.donate.btc_key + '&PayPal=' + theme.donate.paypal_url, style='overflow-x:hidden; overflow-y:hidden; border:0xp none #fff; min-height:240px; width:100%;', frameborder='0', scrolling='no')
 
-  <script src="//cdn.bootcss.com/require.js/2.3.2/require.min.js"></script>
-  <script src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+    if theme.post_copyright.enable == true
+      div
+        ul.post-copyright
+          li.post-copyright-author
+            strong= __('copyright_author_prefix')
+            = theme.post_copyright.author
+          li.post-copyright-link
+            strong= __('copyright_link_prefix')
+            a(href='/' + page.path)= page.permalink
+          li.post-copyright-license
+            strong= __('copyright_declare_prefix')
+            if theme.post_copyright.copyright_text
+              != theme.post_copyright.copyright_text
+            else
+              != __('copyright_default_text')
+      br
 
-  
-</head>
-<body>
-  <div id="container">
-    <div id="particles-js"></div>
-    <div class="left-col">
-    <div class="overlay"></div>
-<div class="intrude-less">
-	<header id="header" class="inner">
-		<a href="/" class="profilepic">
-			
-			<img lazy-src="http://7xkj1z.com1.z0.glb.clouddn.com/head.jpg" class="js-avatar">
-			
-		</a>
+    if theme.shareto == true
+      script(type='text/javascript', src=url_for(theme.js) + '/share.js' + '?v=' + theme.version, async)
+      a.article-share-link(data-url=page.permalink, data-id=page._id, data-qrcode=qrcode(page.permalink))= __('shareto')
 
-		<hgroup>
-		  <h1 class="header-author"><a href="/">李</a></h1>
-		</hgroup>
+    include _partial/tag.pug
+    include _partial/post_nav.pug
 
-		
-
-		
-			<div class="switch-btn">
-				<div class="icon">
-					<div class="icon-ctn">
-						<div class="icon-wrap icon-house" data-idx="0">
-							<div class="birdhouse"></div>
-							<div class="birdhouse_holes"></div>
-						</div>
-						<div class="icon-wrap icon-ribbon hide" data-idx="1">
-							<div class="ribbon"></div>
-						</div>
-						
-						<div class="icon-wrap icon-link hide" data-idx="2">
-							<div class="loopback_l"></div>
-							<div class="loopback_r"></div>
-						</div>
-						
-						
-					</div>
-					
-				</div>
-				<div class="tips-box hide">
-					<div class="tips-arrow"></div>
-					<ul class="tips-inner">
-						<li>菜单</li>
-						<li>标签</li>
-						
-						<li>友情链接</li>
-						
-						
-					</ul>
-				</div>
-			</div>
-		
-
-		<div class="switch-area">
-			<div class="switch-wrap">
-				<section class="switch-part switch-part1">
-					<nav class="header-menu">
-						<ul>
-						
-							<li><a href="/">主页</a></li>
-				        
-							<li><a href="/archives">所有文章</a></li>
-				        
-							<li><a href="/archives">归档</a></li>
-				        
-						</ul>
-					</nav>
-					<nav class="header-nav">
-						<div class="social">
-							
-						</div>
-					</nav>
-				</section>
-				
-				
-				<section class="switch-part switch-part2">
-					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/iOS/" style="font-size: 10px;">iOS</a>
-					</div>
-				</section>
-				
-				
-				
-				<section class="switch-part switch-part3">
-					<div id="js-friends">
-					
-			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://github.com/smackgg/hexo-theme-smackdown">smackdown</a>
-			        
-			        </div>
-				</section>
-				
-
-				
-			</div>
-		</div>
-	</header>				
-</div>
-    </div>
-    <div class="mid-col">
-      <nav id="mobile-nav">
-  	<div class="overlay">
-  		<div class="slider-trigger"></div>
-  		<h1 class="header-author js-mobile-header hide">李</h1>
-  	</div>
-	<div class="intrude-less">
-		<header id="header" class="inner">
-			<div class="profilepic">
-				<img lazy-src="http://7xkj1z.com1.z0.glb.clouddn.com/head.jpg" class="js-avatar">
-			</div>
-			<hgroup>
-			  <h1 class="header-author">李</h1>
-			</hgroup>
-			
-			<nav class="header-menu">
-				<ul>
-				
-					<li><a href="/">主页</a></li>
-		        
-					<li><a href="/archives">所有文章</a></li>
-		        
-					<li><a href="/archives">归档</a></li>
-		        
-		        <div class="clearfix"></div>
-				</ul>
-			</nav>
-			<nav class="header-nav">
-				<div class="social">
-					
-				</div>
-			</nav>
-		</header>				
-	</div>
-</nav>
-      <div class="body-wrap"><article id="post-Protocol-Category-和-Extension" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2018/10/13/Protocol-Category-和-Extension/" class="article-date">
-  	<time datetime="2018-10-13T09:57:18.000Z" itemprop="datePublished">2018-10-13</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="article-title" itemprop="name">
-      Protocol, Category 和 Extension
-      
-    </h1>
-  
-
-      </header>
-      
-      <div class="article-info article-info-post">
-        
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/">iOS</a></li></ul>
-	</div>
-
-        
-
-        
-        <div class="clearfix"></div>
-      </div>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="Protocol"><a href="#Protocol" class="headerlink" title="Protocol"></a>Protocol</h2><p>OC是单继承的，OC中的类可以实现多个 protocol 来实现类似 C++ 中多重继承的效果。</p>
-<p>Protocol 类似 Java 中的 interface，定义了一个方法列表，这个方法列表中的方法可以使用 @required， @optional 标注，以表示该方法是否是必须要实现的方法。 一个 protocol 可以继承其他的 protocol 。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">@protocol TestProtocol &lt;NSObject&gt; // NSObject也是一个 Protocol，这里即继承 NSObject 里的方法</span><br><span class="line">- (void)print;</span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">@interface B : NSObject&lt;TestProtocol&gt;</span><br><span class="line">- (void)print; // 默认方法是 @required 的，即必须实现</span><br><span class="line">@end</span><br></pre></td></tr></table></figure></p>
-<p>Delegate（委托）是 Cocoa 中常见的一种设计模式，其实现依赖于 protocol 这个语言特性。</p>
-<h2 id="含有-property-的-Protocol"><a href="#含有-property-的-Protocol" class="headerlink" title="含有 property 的 Protocol"></a>含有 property 的 Protocol</h2><p>当 Protocol 中含有 property 时，编译器是不会进行自动 synthesize 的，需要手动处理：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">@class ExampleClass;</span><br><span class="line"></span><br><span class="line">@protocol ExampleProtocol</span><br><span class="line"></span><br><span class="line">@required</span><br><span class="line"></span><br><span class="line">@property (nonatomic, retain) ExampleClass *item;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure></p>
-<p>在实现这个 Protocol 的时候，要么再次声明 property：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@interface MyObject : NSObject &lt;ExampleProtocol&gt;</span><br><span class="line"></span><br><span class="line">@property (nonatomic, retain) ExampleClass *item;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure></p>
-<p>要么进行手动 synthesize：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">@interface MyObject : NSObject &lt;ExampleProtocol&gt;</span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">@implementation MyObject</span><br><span class="line">@synthesize item;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure></p>
-<p>工程自带的 AppDelegate 使用了前一种方法，UIApplicationDelegate protocol 当中定义了 window 属性：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@property (nonatomic, retain) UIWindow *window NS_AVAILABLE_IOS(5_0);</span><br></pre></td></tr></table></figure></p>
-<p>在 AppDelegate.h 中我们可以看到再次对 windows 进行了声明：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@interface AppDelegate : UIResponder &lt;UIApplicationDelegate&gt;</span><br><span class="line"></span><br><span class="line">@property (nonatomic, strong) UIWindow *window;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure></p>
-<h2 id="Category"><a href="#Category" class="headerlink" title="Category"></a>Category</h2><p>Category 是一种很灵活的扩展原有类的机制，使用 Category 不需要访问原有类的代码，也无需继承。Category提供了一种简单的方式，来实现类的相关方法的模块化，把不同的类方法分配到不同的类文件中。</p>
-<p>Category 常见的使用方法如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">// SomeClass.h</span><br><span class="line">@interface SomeClass : NSObject &#123;</span><br><span class="line">&#125;</span><br><span class="line">- (void)print;</span><br><span class="line">@end </span><br><span class="line"></span><br><span class="line">// SomeClass+Hello.h</span><br><span class="line">#import &quot;SomeClass.h&quot;</span><br><span class="line"></span><br><span class="line">@interface SomeClass (Hello)</span><br><span class="line">- (void)hello;</span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">// 实现</span><br><span class="line">#import &quot;SomeClass+Hello.h</span><br><span class="line"></span><br><span class="line">@implementationSomeClass (Hello)</span><br><span class="line">-(void)hello &#123;</span><br><span class="line">    NSLog(@&quot;Hello World!&quot;);</span><br><span class="line">&#125;</span><br><span class="line">@end</span><br></pre></td></tr></table></figure></p>
-<p>在使用 Category 时需要注意的一点是，如果有多个命名 Category 均实现了同一个方法（即出现了命名冲突），那么这些方法在运行时只有一个会被调用，具体哪个会被调用是不确定的。因此在给已有的类（特别是 Cocoa 类）添加 Category 时，需要注意命名。</p>
-<h2 id="Extension"><a href="#Extension" class="headerlink" title="Extension"></a>Extension</h2><p>Extension 可以认为是一种匿名的 Category， Extension 与 Category 有如下几点显著的区别：</p>
-<ol>
-<li>使用 Extension 必须有原有类的源码</li>
-<li>Extension 声明的方法必须在类的主 @implementation 区间内实现，可以避免使用有名 Category 带来的多个不必要的 implementation 段。</li>
-<li>Extension 可以在类中添加新的属性和实例变量，Category 不可以(<strong>在 Category 中实际上可以通过运行时添加新的属性</strong>)<br><strong>注：现代 ObjC 中 Extension 和 Category 中声明的方法如果没有实现编译器都会给出警告。</strong></li>
-</ol>
-<p>下面是一个 Extension 的例子：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">@interface MyClass : NSObject  </span><br><span class="line">- (float)value;  </span><br><span class="line">@end  </span><br><span class="line"></span><br><span class="line">@interface MyClass () &#123; // 注意此处扩展的写法  </span><br><span class="line">    float value;  </span><br><span class="line">&#125;  </span><br><span class="line">- (void)setValue:(float)newValue;  </span><br><span class="line">@end  </span><br><span class="line"></span><br><span class="line">@implementation MyClass  </span><br><span class="line"></span><br><span class="line">- (float)value &#123;  </span><br><span class="line">    return value;  </span><br><span class="line">&#125;  </span><br><span class="line"></span><br><span class="line">- (void)setValue:(float)newValue &#123;  </span><br><span class="line">    value = newValue;  </span><br><span class="line">&#125;  </span><br><span class="line">@end</span><br></pre></td></tr></table></figure></p>
-<p>Extension 很常见的用法，是用来给类添加私有的变量和方法，用于在类的内部使用。例如在 interface 中定义为 readonly 类型的属性，在实现中添加 extension，将其重新定义为 readwrite，这样我们在类的内部就可以直接修改它的值，然而外部依然不能调用 setter 方法来修改。示例代码如下（<a href="https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/CustomizingExistingClasses/CustomizingExistingClasses.html#//apple_ref/doc/uid/TP40011210-CH6-SW3" target="_blank" rel="noopener">来自苹果官方文档</a>）: </p>
-<p>XYZPerson.h<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@interface XYZPerson : NSObject</span><br><span class="line">...</span><br><span class="line">@property (readonly) NSString *uniqueIdentifier;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure></p>
-<p>XYZPerson.m<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">@interface XYZPerson ()</span><br><span class="line">@property (readwrite) NSString *uniqueIdentifier;</span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">@implementation XYZPerson</span><br><span class="line">...</span><br><span class="line">@end</span><br></pre></td></tr></table></figure></p>
-<h2 id="如何给已有的类添加属性"><a href="#如何给已有的类添加属性" class="headerlink" title="如何给已有的类添加属性"></a>如何给已有的类添加属性</h2><p>首先强调一下上面例子中所展示的，Extension 可以给类添加属性，编译器会自动生成 getter，setter 和 ivar。 Category 并不支持这些。如果使用 Category 的话，类似下面这样：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">@interface XYZPerson (UDID)</span><br><span class="line">@property (readwrite) NSString *uniqueIdentifier;</span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">@implementation XYZPerson (UDID)</span><br><span class="line">...</span><br><span class="line">@end</span><br></pre></td></tr></table></figure></p>
-<p>尽管编译可以通过，但是当真正使用 uniqueIdentifier 时直接会导致程序崩溃。</p>
-<p>如果我们手动去 synthesize 呢？像下面这样：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@implementation XYZPerson (UDID)</span><br><span class="line">@synthesize uniqueIdentifier;</span><br><span class="line">...</span><br><span class="line">@end</span><br></pre></td></tr></table></figure></p>
-<p>然而这样做的话，代码直接报编译错误了：</p>
-<p>@synthesize not allowed in a category’s implementation</p>
-<p>看来这条路是彻底走不通了。</p>
-<p>不过我们还有别的方法，想通过 Category 添加属性的话，可以通过 Runtime 当中提供的 associated object 特性。NSHipster 的 <a href="https://nshipster.cn/associated-objects/" target="_blank" rel="noopener">这篇文章</a> 展示了具体的做法。</p>
-<h2 id="如何在类中添加全局变量"><a href="#如何在类中添加全局变量" class="headerlink" title="如何在类中添加全局变量"></a>如何在类中添加全局变量</h2><p>有些时候我们需要在类中添加某个在类中全局可用的变量，为了避免污染作用域，一个比较好的做法是在 .m 文件中使用 static 变量：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">static NSOperationQueue * _personOperationQueue = nil;</span><br><span class="line"></span><br><span class="line">@implementation XYZPerson</span><br><span class="line">...</span><br><span class="line">@end</span><br></pre></td></tr></table></figure></p>
-<p>由于 static 变量在编译期就是确定的，因此对于 NSObject 对象来说，初始化的值只能是 nil。如何进行类似 init 的初始化呢？可以通过重载 initialize 方法来做：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">@implementation XYZPerson</span><br><span class="line">- (void)initialize &#123;</span><br><span class="line">    if (!_personOperationQueue) &#123;</span><br><span class="line">        _personOperationQueue = [[NSOperationQueue alloc] init];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">@end</span><br></pre></td></tr></table></figure></p>
-<p>为什么这里要判断是否为 nil 呢？因为 initialize 方法可能会调用多次。</p>
-<p>如果是在 Category 中想声明全局变量呢？当然也可以通过 initialize，不过除非必须的情况下，并不推荐在 Category 当中进行方法重载。</p>
-<p>有一种方法是声明 static 函数，下面的代码来自 <a href="https://github.com/AFNetworking/AFNetworking/blob/master/AFNetworking/AFURLSessionManager.m" target="_blank" rel="noopener">AFNetworking</a>，声明了一个当前文件范围可用的队列：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">static dispatch_queue_t url_session_manager_creation_queue() &#123;</span><br><span class="line">    static dispatch_queue_t af_url_session_manager_creation_queue;</span><br><span class="line">    static dispatch_once_t onceToken;</span><br><span class="line">    dispatch_once(&amp;onceToken, ^&#123;</span><br><span class="line">        af_url_session_manager_creation_queue = dispatch_queue_create(&quot;com.alamofire.networking.session.manager.creation&quot;, DISPATCH_QUEUE_SERIAL);</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    return af_url_session_manager_creation_queue;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>下面介绍一个有点黑魔法的方法，除了上面两种方法之外，我们还可以通过编译器的 <code>&lt;__attribute__&gt;</code> 特性来实现初始化：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">__attribute__((constructor))</span><br><span class="line">static void initialize_Queue() &#123;</span><br><span class="line">    _personOperationQueue = [[NSOperationQueue alloc] init];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@implementation XYZPerson (Operation)</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure></p>
-
-      
-    </div>
-    
-  </div>
-  
-    
-<nav id="article-nav">
-  
-    <a href="/2018/10/14/Block-基础/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">&lt;</strong>
-      <div class="article-nav-title">
-        
-          Block 基础
-        
-      </div>
-    </a>
-  
-  
-    <a href="/2018/10/13/变量/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">变量</div>
-      <strong class="article-nav-caption">&gt;</strong>
-    </a>
-  
-</nav>
-
-  
-</article>
-
-
-<div class="ds-share share" data-thread-key="Protocol-Category-和-Extension" data-title="Protocol, Category 和 Extension" data-url="http://yoursite.com/2018/10/13/Protocol-Category-和-Extension/"  data-images="http://7xkj1z.com1.z0.glb.clouddn.com/head.jpg" data-content="Protocol, Category 和 Extension">
-    <div class="ds-share-inline">
-      <ul  class="ds-share-icons-16">
-      	<li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
-        <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
-        <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
-        <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
-        <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
-      </ul>
-      <div class="ds-share-icons-more">
-      </div>
-    </div>
- </div>
- 
-
-
-
-
-
-</div>
-      <footer id="footer">
-  <div class="outer">
-    <div id="footer-info">
-      <div class="footer-left">
-        &copy; 2018 李
-      </div>
-        <div class="footer-right">
-          <a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/smackgg/hexo-theme-smackdown" target="_blank">Smackdown</a>
-        </div>
-    </div>
-  </div>
-</footer>
-    </div>
-    
-  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
-
-
-<script>
-	var yiliaConfig = {
-		fancybox: true,
-		mathjax: true,
-		animate: true,
-		isHome: false,
-		isPost: true,
-		isArchive: false,
-		isTag: false,
-		isCategory: false,
-		open_in_new: false
-	}
-</script>
-<script src="/js/main.js"></script>
-
-
-
-<script type="text/x-mathjax-config">
-MathJax.Hub.Config({
-    tex2jax: {
-        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
-        processEscapes: true,
-        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-    }
-});
-
-MathJax.Hub.Queue(function() {
-    var all = MathJax.Hub.getAllJax(), i;
-    for(i=0; i < all.length; i += 1) {
-        all[i].SourceElement().parentNode.className += ' has-jax';                 
-    }       
-});
-</script>
-
-<script src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js"></script>
-
-
-  </div>
-</body>
-</html>
+    if page.comments
+      include _partial/comments.pug
