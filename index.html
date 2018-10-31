@@ -311,33 +311,7 @@
         
           <h2 id="UIView-Animation"><a href="#UIView-Animation" class="headerlink" title="UIView Animation"></a>UIView Animation</h2><h3 id="简单动画"><a href="#简单动画" class="headerlink" title="简单动画"></a>简单动画</h3><p>对于 UIView 上简单的动画，iOS 提供了很方便的函数：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">+ animateWithDuration:animations:</span><br></pre></td></tr></table></figure>
-<p>第一个参数是动画的持续时间，第二个参数是一个 block，在 animations block 中对 UIView 的属性进行调整，设置 UIView 动画结束后最终的效果，iOS 就会自动补充中间帧，形成动画。</p>
-<p>可以更改的属性有:</p>
-<ul>
-<li>frame</li>
-<li>bounds</li>
-<li>center</li>
-<li>transform</li>
-<li>alpha</li>
-<li>backgroundColor</li>
-<li>contentStretch</li>
-</ul>
-<p>这些属性大都是 View 的基本属性，下面是一个例子，这个例子中的动画会同时改变 View 的 frame，backgroundColor 和 alpha ：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[UIView animateWithDuration:2.0 animations:^&#123;</span><br><span class="line">    myView.frame = CGRectMake(50, 200, 200, 200);</span><br><span class="line">    myView.backgroundColor = [UIColor blueColor];</span><br><span class="line">    myView.alpha = 0.7;</span><br><span class="line">&#125;];</span><br></pre></td></tr></table></figure>
-<p>其中有一个比较特殊的 transform 属性，它的类型是 CGAffineTransform，即 2D 仿射变换，这是个数学中的概念，用一个三维矩阵来表述 2D 图形的矢量变换。用 transform 属性对 View 进行：</p>
-<ul>
-<li>旋转</li>
-<li>缩放</li>
-<li>其他自定义 2D 变换</li>
-</ul>
-<p>iOS 提供了下面的函数可以创建简单的 2D 变换：</p>
-<ul>
-<li>CGAffineTransformMakeScale</li>
-<li>CGAffineTransformMakeRotation</li>
-<li>CGAffineTransformMakeTranslation</li>
-</ul>
-<p>例如下面的代码会将 View 缩小至原来的 1/4 大小：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[UIView animateWithDuration:2.0 animations:^&#123;</span><br><span class="line">    myView.transform = CGAffineTransformMakeScale(0.5, 0.5);</span><br><span class="line">&#125;];</span><br></pre></td></tr></table></figure>
+<p>第一个参数是动画的持续时间，第二个参数是一个 block，在 animations block 中对 UIView 的属性进行调整，设置 UIView 动画结束后最终的效果，iOS 就会自动补充中间帧，形成动画。<br>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2018/10/31/动画/#more" rel="contents">
@@ -463,7 +437,6 @@
         
           <p>UIViewController（视图控制器），顾名思义，是 MVC 设计模式中的控制器部分。UIViewController 在 UIKit 中主要功能是用于控制画面的切换，其中的 view 属性（UIView 类型）管理整个画面的外观。</p>
 <h2 id="UIViewController-生命周期"><a href="#UIViewController-生命周期" class="headerlink" title="UIViewController 生命周期"></a>UIViewController 生命周期</h2><p> ViewController 生命周期的第一步是初始化。不过具体调用的方法还有所不同。如果使用 StoryBoard 来创建 ViewController，我们不需要显式地去初始化，Storyboard 会自动使用 initWithCoder: 进行初始化。如果不使用 StoryBoard，我们可以使用 init: 函数进行初始化，init: 函数在实现过程中还会调用 initWithNibName:bundle:。 我们应该尽量避免在 VC 外部调用 initWithNibName:bundle:，而是把它放在 VC 的内部<a href="https://stackoverflow.com/questions/2224077/when-should-i-initialize-a-view-controller-using-initwithnibname" target="_blank" rel="noopener">（参考这里）</a>。</p>
-<p>初始化完成后，VC 的生命周期会经过下面几个函数：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">- (void)loadView</span><br><span class="line">- (void)viewDidLoad</span><br><span class="line">- (void)viewWillAppear</span><br><span class="line">- (void)viewWillLayoutSubviews</span><br><span class="line">- (void)viewDidLayoutSubviews</span><br><span class="line">- (void)viewDidAppear</span><br><span class="line">- (void)viewWillDisappear</span><br><span class="line">- (void)viewDidDisappear</span><br></pre></td></tr></table></figure></p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2018/10/14/UIViewController/#more" rel="contents">
@@ -595,13 +568,7 @@
 <li>事件处理</li>
 </ul>
 <h2 id="绘制和动画"><a href="#绘制和动画" class="headerlink" title="绘制和动画"></a>绘制和动画</h2><h3 id="视图绘制"><a href="#视图绘制" class="headerlink" title="视图绘制"></a>视图绘制</h3><p>UIView 是按需绘制的，当整个视图或者视图的一部分由于布局变化，变成可见的，系统会要求视图进行绘制。对于那些需要使用 UIKit 或者 CoreGraphics 进行自定义绘制的视图，系统会调用drawRect:方法进行绘制。</p>
-<p>当视图内容发生变化时，需要调用setNeedsDisplay或者setNeedsDisplayInRect:方法，告诉系统该重新绘制这个视图了。调用这个方法之后，系统会在下一个绘制周期更新这个视图的内容。由于系统要等到下一个绘制周期才真正进行绘制，可以一次性对多个视图调用setNeedsDisplay，它们会同时被更新。</p>
-<h3 id="视图的几何属性"><a href="#视图的几何属性" class="headerlink" title="视图的几何属性"></a>视图的几何属性</h3><p>视图有 frame，center，bounds 等几个基本几何属性，其中:</p>
-<ul>
-<li>frame 使用的最多，其坐标位置都是相对于父视图的，可以用于确定本视图在父视图中的位置和其自身的大小</li>
-<li>center 的坐标位置也是相对于父视图的，通常用于移动，旋转等动画操作</li>
-<li>bounds 是相对于自身的，通常情况下就是（0, 0, width, height)， bounds 的含义可以认为是当前 view 被允许绘制的范围</li>
-</ul>
+<p>当视图内容发生变化时，需要调用setNeedsDisplay或者setNeedsDisplayInRect:方法，告诉系统该重新绘制这个视图了。调用这个方法之后，系统会在下一个绘制周期更新这个视图的内容。由于系统要等到下一个绘制周期才真正进行绘制，可以一次性对多个视图调用setNeedsDisplay，它们会同时被更新。<br>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2018/10/14/UIView/#more" rel="contents">
@@ -726,11 +693,7 @@
       
         
           <h2 id="使用-Block-时的注意事项"><a href="#使用-Block-时的注意事项" class="headerlink" title="使用 Block 时的注意事项"></a>使用 Block 时的注意事项</h2><p>在非 ARC 的情况下，对于 block 类型的属性应该使用 copy ，因为 block 需要维持其作用域中捕获的变量。在 ARC 中编译器会自动对 block 进行 copy 操作，因此使用 strong 或者 copy 都可以，没有什么区别，但是苹果仍然建议使用 copy 来指明编译器的行为。</p>
-<p>block 在捕获外部变量的时候，会保持一个强引用，当在 block 中捕获 self 时，由于对象会对 block 进行 copy，于是便形成了强引用循环：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">@interface XYZBlockKeeper : NSObject</span><br><span class="line">@property (copy) void (^block)(void);</span><br><span class="line">@end</span><br></pre></td></tr></table></figure></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">@implementation XYZBlockKeeper</span><br><span class="line">- (void)configureBlock &#123;</span><br><span class="line">    self.block = ^&#123;</span><br><span class="line">        [self doSomething];  </span><br><span class="line">                               </span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
-<p>为了避免强引用循环，最好捕获一个 self 的弱引用：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">- (void)configureBlock &#123;</span><br><span class="line">    XYZBlockKeeper * __weak weakSelf = self;</span><br><span class="line">    self.block = ^&#123;</span><br><span class="line">        [weakSelf doSomething];   </span><br><span class="line">                                  </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>使用弱引用会带来另一个问题，weakSelf 有可能会为 nil，如果多次调用 weakSelf 的方法，有可能在 block 执行过程中 weakSelf 变为 nil。因此需要在 block 中将 weakSelf “强化”<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">__weak typeof(self) weakSelf = self;</span><br><span class="line">NSBlockOperation *op = [[NSBlockOperation alloc] init];</span><br><span class="line">[op addExecutionBlock:^ &#123;</span><br><span class="line">    __strong typeof(self) strongSelf = weakSelf;</span><br><span class="line">    [strongSelf doSomething];</span><br><span class="line">    [strongSelf doMoreThing];</span><br><span class="line">&#125;];</span><br><span class="line">[someOperationQueue addOperation:op];</span><br></pre></td></tr></table></figure></p>
-<p>doSomething 和 doMoreThing 要么全执行成功，要么全失败，不会出现一个成功一个失败，即执行到中间 self 变成 nil 的情况。</p>
+<p>block 在捕获外部变量的时候，会保持一个强引用，当在 block 中捕获 self 时，由于对象会对 block 进行 copy，于是便形成了强引用循环：<br>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2018/10/14/Block-进阶/#more" rel="contents">
@@ -857,16 +820,7 @@
           <h2 id="Block-语法"><a href="#Block-语法" class="headerlink" title="Block 语法"></a>Block 语法</h2><p>Block 可以认为是一种匿名函数，使用如下语法声明一个 Block 类型：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">return_type (^block_name)(parameters)</span><br></pre></td></tr></table></figure></p>
 <p>例如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">double (^multiplyTwoValues)(double, double);</span><br></pre></td></tr></table></figure></p>
 <p>Block 字面值的写法如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">^ (double firstValue, double secondValue) &#123;</span><br><span class="line">    return firstValue * secondValue;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>上面的写法省略了返回值的类型，也可以显式地指出返回值类型。</p>
-<p>声明并且定义完一个Block之后，便可以像使用函数一样使用它：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">double (^multiplyTwoValues)(double, double) =</span><br><span class="line">                          ^(double firstValue, double secondValue) &#123;            </span><br><span class="line">                              return firstValue * secondValue;</span><br><span class="line">                          &#125;;</span><br><span class="line">double result = multiplyTwoValues(2,4);</span><br><span class="line"></span><br><span class="line">NSLog(@&quot;The result is %f&quot;, result);</span><br></pre></td></tr></table></figure></p>
-<p>同时，Block 也是一种 Objective-C 对象，可以用于赋值，当做参数传递，也可以放入 NSArray 和 NSDictionary 中。</p>
-<p>注意：当用于函数参数时，Block 应该放在参数列表的最后一个。</p>
-<p>由于 Block 的语法是如此的晦涩难记，以至于出现了 <a href="http://fuckingblocksyntax.com" target="_blank" rel="noopener">fuckingblocksyntax</a> 这样的网站专门用于记录 block 的语法，翻译并摘录如下：</p>
-<p>作为变量:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">returnType (^blockName)(parameterTypes) = ^returnType(parameters) &#123;...&#125;;</span><br></pre></td></tr></table></figure></p>
-<p>作为属性:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@property (nonatomic, copy) returnType (^blockName)(parameterTypes);</span><br></pre></td></tr></table></figure></p>
-<p>作为函数声明中的参数:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">- (void)someMethodThatTakesABlock:(returnType (^)(parameterTypes))blockName;</span><br></pre></td></tr></table></figure></p>
-<p>作为函数调用中的参数:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[someObject someMethodThatTakesABlock:^returnType (parameters) &#123;...&#125;];</span><br></pre></td></tr></table></figure></p>
-<p>作为 typedef:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">typedef returnType (^TypeName)(parameterTypes);</span><br><span class="line">TypeName blockName = ^returnType(parameters) &#123;...&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>上面的写法省略了返回值的类型，也可以显式地指出返回值类型。<br>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2018/10/14/Block-基础/#more" rel="contents">
@@ -992,12 +946,7 @@
         
           <h2 id="Protocol"><a href="#Protocol" class="headerlink" title="Protocol"></a>Protocol</h2><p>OC是单继承的，OC中的类可以实现多个 protocol 来实现类似 C++ 中多重继承的效果。</p>
 <p>Protocol 类似 Java 中的 interface，定义了一个方法列表，这个方法列表中的方法可以使用 @required， @optional 标注，以表示该方法是否是必须要实现的方法。 一个 protocol 可以继承其他的 protocol 。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">@protocol TestProtocol &lt;NSObject&gt; // NSObject也是一个 Protocol，这里即继承 NSObject 里的方法</span><br><span class="line">- (void)print;</span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">@interface B : NSObject&lt;TestProtocol&gt;</span><br><span class="line">- (void)print; // 默认方法是 @required 的，即必须实现</span><br><span class="line">@end</span><br></pre></td></tr></table></figure></p>
-<p>Delegate（委托）是 Cocoa 中常见的一种设计模式，其实现依赖于 protocol 这个语言特性。</p>
-<h2 id="含有-property-的-Protocol"><a href="#含有-property-的-Protocol" class="headerlink" title="含有 property 的 Protocol"></a>含有 property 的 Protocol</h2><p>当 Protocol 中含有 property 时，编译器是不会进行自动 synthesize 的，需要手动处理：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">@class ExampleClass;</span><br><span class="line"></span><br><span class="line">@protocol ExampleProtocol</span><br><span class="line"></span><br><span class="line">@required</span><br><span class="line"></span><br><span class="line">@property (nonatomic, retain) ExampleClass *item;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure></p>
-<p>在实现这个 Protocol 的时候，要么再次声明 property：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@interface MyObject : NSObject &lt;ExampleProtocol&gt;</span><br><span class="line"></span><br><span class="line">@property (nonatomic, retain) ExampleClass *item;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure></p>
-<p>要么进行手动 synthesize：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">@interface MyObject : NSObject &lt;ExampleProtocol&gt;</span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">@implementation MyObject</span><br><span class="line">@synthesize item;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure></p>
-<p>工程自带的 AppDelegate 使用了前一种方法，UIApplicationDelegate protocol 当中定义了 window 属性：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@property (nonatomic, retain) UIWindow *window NS_AVAILABLE_IOS(5_0);</span><br></pre></td></tr></table></figure></p>
-<p>在 AppDelegate.h 中我们可以看到再次对 windows 进行了声明：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@interface AppDelegate : UIResponder &lt;UIApplicationDelegate&gt;</span><br><span class="line"></span><br><span class="line">@property (nonatomic, strong) UIWindow *window;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure></p>
+<p>Delegate（委托）是 Cocoa 中常见的一种设计模式，其实现依赖于 protocol 这个语言特性。<br>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2018/10/13/Protocol-Category-和-Extension/#more" rel="contents">
@@ -1123,8 +1072,7 @@
         
           <p>苹果推荐在现代 Objective-C 中使用 @property 来实现成员变量：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@interface AClass : NSObject</span><br><span class="line"></span><br><span class="line">@property (nonatomic, copy) NSString *name;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure></p>
 <p>使用 @property 声明的变量可以使用 实例名.变量名 来获取和修改。</p>
-<p>@property 可以看做是一种语法糖，在 MRC 下，使用 @property 可以看成实现了下面的代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">// AClass.h</span><br><span class="line">@interface AClass : NSObject &#123;  </span><br><span class="line">@public</span><br><span class="line">    NSString *_name;    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (NSString*)name;</span><br><span class="line">- (void)setName:(NSString *)newName;</span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">// AClass.m</span><br><span class="line">@implementation AClass</span><br><span class="line">- (NSString*)name &#123;  </span><br><span class="line">    return _name;   </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)setName:(NSString *)name &#123;   </span><br><span class="line">    if (_name != name) &#123;    </span><br><span class="line">        [_name release];    </span><br><span class="line">        _name = [name copy];    </span><br><span class="line">    &#125;   </span><br><span class="line">&#125;   </span><br><span class="line">@end</span><br></pre></td></tr></table></figure></p>
-<p>也就是说，@property 会自动生成 getter 和 setter， 同时进行自动内存管理。</p>
+<p>@property 可以看做是一种语法糖，在 MRC 下，使用 @property 可以看成实现了下面的代码：<br>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2018/10/13/变量/#more" rel="contents">
