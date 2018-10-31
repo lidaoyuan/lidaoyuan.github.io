@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="SixSixSix">
 <meta property="og:description" content="UIView 表示屏幕上的一块矩形区域，负责渲染区域的内容，并且响应该区域内发生的触摸事件。它在iOS App中占有绝对重要的地位，因为iOS中几乎所有可视化控件都是 UIView 的子类。 UIView 可以负责以下几种任务：  绘制和动画 布局和子视图管理 事件处理  绘制和动画视图绘制UIView 是按需绘制的，当整个视图或者视图的一部分由于布局变化，变成可见的，系统会要求视图进行绘制。对于">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-10-14T10:23:22.764Z">
+<meta property="og:updated_time" content="2018-10-31T09:40:10.191Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="UIView">
 <meta name="twitter:description" content="UIView 表示屏幕上的一块矩形区域，负责渲染区域的内容，并且响应该区域内发生的触摸事件。它在iOS App中占有绝对重要的地位，因为iOS中几乎所有可视化控件都是 UIView 的子类。 UIView 可以负责以下几种任务：  绘制和动画 布局和子视图管理 事件处理  绘制和动画视图绘制UIView 是按需绘制的，当整个视图或者视图的一部分由于布局变化，变成可见的，系统会要求视图进行绘制。对于">
@@ -325,6 +325,7 @@
 <li>center 的坐标位置也是相对于父视图的，通常用于移动，旋转等动画操作</li>
 <li>bounds 是相对于自身的，通常情况下就是（0, 0, width, height)， bounds 的含义可以认为是当前 view 被允许绘制的范围</li>
 </ul>
+<a id="more"></a>
 <h3 id="视图的-ContentMode"><a href="#视图的-ContentMode" class="headerlink" title="视图的 ContentMode"></a>视图的 ContentMode</h3><p>视图在初次绘制完成后，系统会对绘制结果进行快照，之后尽可能地使用快照，避免重新绘制。如果视图的几何属性发生改变，系统会根据视图的 contentMode 来决定如何改变显示效果。</p>
 <p>默认的 contentMode 是 UIViewContentModeScaleToFill ，系统会拉伸当前的快照，使其符合新的 frame 尺寸。大部分 contentMode 都会对当前的快照进行拉伸或者移动等操作。如果需要重新绘制，可以把 contentMode 设置为 UIViewContentModeRedraw，强制视图在改变大小之类的操作时调用drawRect:重绘。</p>
 <h3 id="动画"><a href="#动画" class="headerlink" title="动画"></a>动画</h3><p>可以以动画的形式改变视图的下面这些属性，只需要告诉系统动画开始和结束时的数值，系统会自动处理中间的过渡过程。</p>
