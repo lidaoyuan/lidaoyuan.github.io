@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="SixSixSix">
 <meta property="og:description" content="UIView Animation简单动画对于 UIView 上简单的动画，iOS 提供了很方便的函数： 1+ animateWithDuration:animations: 第一个参数是动画的持续时间，第二个参数是一个 block，在 animations block 中对 UIView 的属性进行调整，设置 UIView 动画结束后最终的效果，iOS 就会自动补充中间帧，形成动画。 可以更改的属">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-10-31T06:25:09.777Z">
+<meta property="og:updated_time" content="2018-10-31T06:29:27.167Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="动画">
 <meta name="twitter:description" content="UIView Animation简单动画对于 UIView 上简单的动画，iOS 提供了很方便的函数： 1+ animateWithDuration:animations: 第一个参数是动画的持续时间，第二个参数是一个 block，在 animations block 中对 UIView 的属性进行调整，设置 UIView 动画结束后最终的效果，iOS 就会自动补充中间帧，形成动画。 可以更改的属">
@@ -334,7 +334,7 @@
 <li>contentStretch</li>
 </ul>
 <p>这些属性大都是 View 的基本属性，下面是一个例子，这个例子中的动画会同时改变 View 的 frame，backgroundColor 和 alpha ：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[UIView animateWithDuration:2.0 animations:^&#123;</span><br><span class="line">    myView.frame = CGRectMake(50, 200, 200, 200);</span><br><span class="line">    myView.backgroundColor = [UIColor blueColor];</span><br><span class="line">    myView.alpha = 0.7;</span><br><span class="line">&#125;];</span><br></pre></td></tr></table></figure>
+<p>[UIView animateWithDuration:2.0 animations:^{<br>    myView.frame = CGRectMake(50, 200, 200, 200);<br>    myView.backgroundColor = [UIColor blueColor];<br>    myView.alpha = 0.7;<br>}];</p>
 <p>其中有一个比较特殊的 transform 属性，它的类型是 CGAffineTransform，即 2D 仿射变换，这是个数学中的概念，用一个三维矩阵来表述 2D 图形的矢量变换。用 transform 属性对 View 进行：</p>
 <ul>
 <li>旋转</li>
